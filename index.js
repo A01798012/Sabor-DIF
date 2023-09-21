@@ -61,5 +61,5 @@ app.use("/api/comensal", comensalRouter);
 app.use("/api/comida", comidaRouter);
 app.use("/api/responsable", responsableRouter);
 
-const port = 8080;
-app.listen(port, () => console.log(`Listening on port ${port}...`))
+const port = 3000;
+app.listen(port, () => console.log(`Listening on port http://10.48.87.62:${port}...`))

@@ -71,7 +71,7 @@ router.get("/:curp/dependientes", async function(req, res){
     const rows = await connection.query("ObtenerDependientes(?)", [curp]);
     connection.release();
     console.log(rows);
-    res.status(201).send(`Enviando dependencias de ${curp}`);
+    res.status(200).send(`Enviando dependencias de ${curp}`);
   }catch(err) {
     res.status(500);
 
@@ -95,11 +95,51 @@ router.get("/:curp/dependientes", async function(req, res){
 router.get("/todos", async function(req, res){
   try {
     const connection = await pool.getConnection();
-    const rows = await connection.query("ObtenerComensales()", []);
+    const rows = await connection.query("CALL ObtenerComensales()", []);
     connection.release();
     console.log(rows);
-    res.status(201).send(`Enviando comensales`);
+    res.status(200).send(`Enviando comensales`);
   }catch(err) {
+    res.status(500);
+  }
+});
+// Endpoint para insertar/registrar un dependiente  
+/**
+ * @swagger
+ * /comensal/registrar/dependiente:
+ *   post:
+ *     summary: Registrar un nuevo dependiente 
+ *     tags: [Comensal]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               curpDepende:
+ *                 type: string
+ *               curpDependiente:
+ *                 type: string
+ *             required:
+ *               - curpDepende
+ *               - curpDependiente
+ *     responses:
+ *       201:
+ *         description: Dependiente registrado exitosamente
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+
+router.post("/registrar/dependiente", async function(req, res){
+  try {
+    const {curpeDepende, curpDependiente} = req.body;
+    const connection = await pool.getConnection();
+    await connection.query("CALL RegistrarDependiente(?,?)", [curpeDepende, curpDependiente]);
+    connection.release();
+    res.status(201).send(`${curpDependiente} depende de ${curpeDepende}`);
+  } catch(err) {
     res.status(500);
   }
 });
