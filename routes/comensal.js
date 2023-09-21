@@ -100,7 +100,7 @@ router.get("/todos", async function(req, res){
     console.log(rows);
     res.status(200).send(`Enviando comensales`);
   }catch(err) {
-    res.status(500);
+    res.status(err);
   }
 });
 // Endpoint para insertar/registrar un dependiente  
