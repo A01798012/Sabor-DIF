@@ -34,7 +34,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:8080/api/",
       },
     ],
   },
@@ -45,7 +45,7 @@ const specs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(specs)
+  swaggerUi.setup(specs, {explorer: true})
 );
 const cors = require("cors");
 

@@ -8,12 +8,108 @@ const pool = mariadb.createPool({
   password: 'your_db_password',
   database: 'your_db_name',
 });
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Comensal:
+ *       type: object
+ *       required:
+ *         - nombres 
+ *         - apellidoPaterno
+ *         - apellidoMaterno
+ *         - curp
+ *         - genero
+ *       properties:
+ *         nombres:
+ *           type: string
+ *           description: Nombres del comensal
+ *         apellidoPaterno:
+ *           type: string
+ *           description: Apellido paterno del comensal
+ *         apellidoMaterno:
+ *           type: string
+ *           description: Apellido materno del comensal 
+ *         curp:
+ *           type: string 
+ *           description: El CURP del comensal
+ *         genero:
+ *           type: string
+ *           description: Genero del comensal
+ *       example:
+ *         nombres: Juan Carlos
+ *         apellidoPaterno: Perez
+ *         apellidoMaterno: Garcia
+ *         curp: PEGJ850315HJCRRN07
+ *         genero: H
+ */
+// Endpoint para obtener dependencias de un comensal
+/**
+ * @swagger
+ * /comensal/{curp}/dependientes:
+ *   get:
+ *     summary: Obtener dependientes de un comensal
+ *     tags: [Comensal]
+ *     parameters:
+ *       - in: path
+ *         name: curp
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: CURP del comensal
+ *     responses:
+ *       201:
+ *         description: Dependientes obtenidos exitosamente
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+router.get("/:curp/dependientes", async function(req, res){
+  try {
+    const curp = req.params.curp;
+    const connection = await pool.getConnection();
+    const rows = await connection.query("ObtenerDependientes(?)", [curp]);
+    connection.release();
+    console.log(rows);
+    res.status(201).send(`Enviando dependencias de ${curp}`);
+  }catch(err) {
+    res.status(500);
+
+  }
+});
+
+// Endpoint para obtener todos los comensales registrados
+/**
+ * @swagger
+ * /comensal/todos:
+ *   get:
+ *     summary: Obtener todos los comensales registrados
+ *     tags: [Comensal]
+ *     responses:
+ *       201:
+ *         description: Comensales obtenidos exitosamente
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+router.get("/todos", async function(req, res){
+  try {
+    const connection = await pool.getConnection();
+    const rows = await connection.query("ObtenerComensales()", []);
+    connection.release();
+    console.log(rows);
+    res.status(201).send(`Enviando comensales`);
+  }catch(err) {
+    res.status(500);
+  }
+});
 // Endpoint para insertar/registrar un comensal
 /**
  * @swagger
  * /comensal/registrar:
  *   post:
  *     summary: Registrar un nuevo comensal
+ *     tags: [Comensal]
  *     requestBody:
  *       required: true
  *       content:
@@ -62,64 +158,6 @@ router.post("/registrar", async function(req, res){
   }
 });
 
-// Endpoint para obtener dependencias de un comensal
-/**
- * @swagger
- * /comensal/{curp}/dependientes:
- *   get:
- *     summary: Obtener dependientes de un comensal
- *     parameters:
- *       - in: path
- *         name: curp
- *         required: true
- *         schema:
- *           type: string
- *         description: CURP del comensal
- *     responses:
- *       201:
- *         description: Dependientes obtenidos exitosamente
- *       500:
- *         description: Error interno del servidor
- */
-
-router.get("/:curp/dependientes", async function(req, res){
-  try {
-    const curp = req.params.curp;
-    const connection = await pool.getConnection();
-    const rows = await connection.query("ObtenerDependientes(?)", [curp]);
-    connection.release();
-    console.log(rows);
-    res.status(201).send(`Enviando dependencias de ${curp}`);
-  }catch(err) {
-    res.status(500);
-
-  }
-});
-
-// Endpoint para obtener todos los comensales registrados
-/**
- * @swagger
- * /comensal/todos:
- *   get:
- *     summary: Obtener todos los comensales registrados
- *     responses:
- *       201:
- *         description: Comensales obtenidos exitosamente
- *       500:
- *         description: Error interno del servidor
- */
-
-router.get("/todos", async function(req, res){
-  try {
-    const connection = await pool.getConnection();
-    const rows = await connection.query("ObtenerComensales()", []);
-    connection.release();
-    console.log(rows);
-    res.status(201).send(`Enviando comensales`);
-  }catch(err) {
-    res.status(500);
-  }
-});
 
 //TODO 
 //TODO 

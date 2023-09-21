@@ -9,13 +9,31 @@ const pool = mariadb.createPool({
   database: 'your_db_name',
 });
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Comedor:
+ *       type: object
+ *       required:
+ *         - nombre 
+ *       properties:
+ *         nombre:
+ *           type: string
+ *           description: nombre del comedor
+ *       example:
+ *         nombre: idk
+ */
 
 // Endpoint para obtener nombres de comedores
 /**
  * @swagger
+ * tags:
+ *   name: Comedor 
  * /comedor/nombres:
  *   get:
  *     summary: Obtener nombres de comedores
+ *     tags: [Comedor]
  *     responses:
  *       200:
  *         description: Nombres de comedores obtenidos exitosamente

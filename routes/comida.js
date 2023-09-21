@@ -8,14 +8,48 @@ const pool = mariadb.createPool({
   password: 'your_db_password',
   database: 'your_db_name',
 });
-//TODO registrar comida para uno mismo
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Comida:
+ *       type: object
+ *       required:
+ *         - curpComensal 
+ *         - comedor
+ *         - aportacion 
+ *       properties:
+ *         curpComensal:
+ *           type: string
+ *           description: El CURP de quien pide la comida
+ *         comedor:
+ *           type: string
+ *           description: El nombre del comedor
+ *         aportacion:
+ *           type: number 
+ *           description: La cantidad que el comensal da en la cuota de recuperacion 
+ *         curpDepende:
+ *           type: string 
+ *           description: CURP de quien pide la comida de quien depende de el
+ *         curpDependiente:
+ *           type: string
+ *           description: CURP de persona que depende de curpDepende
+ *       example:
+ *         curpComensal: d5fE_asz
+ *         comedor: The New Turing Omnibus
+ *         aportacion: Alexander K. Dewdney
+ *         curpDepende: false
+ *         curpDependiente: 2020-03-10T04:05:06.157Z
+ */
 
 // Endpoint para registrar comida de un comensal
 /**
  * @swagger
+ * tags: Comida
  * /comida/registrar:
  *   post:
  *     summary: Registrar comida de un comensal
+ *     tags: [Comida]
  *     requestBody:
  *       required: true
  *       content:
@@ -28,7 +62,7 @@ const pool = mariadb.createPool({
  *               comedor:
  *                 type: string
  *               aportacion:
- *                 type: number
+ *                 type: float 
  *             required:
  *               - curpComensal
  *               - comedor
@@ -57,9 +91,10 @@ router.post("/registrar", async function(req, res){
 // Endpoint para registrar comida de un comensal dependiente
 /**
  * @swagger
- * /registrar/{depende}/{dependiente}:
+ * /comida/registrar/{depende}/{dependiente}:
  *   post:
  *     summary: Registrar comida de un comensal dependiente
+ *     tags: [Comida]
  *     parameters:
  *       - in: path
  *         name: depende
