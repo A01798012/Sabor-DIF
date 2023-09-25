@@ -78,7 +78,7 @@ router.post("/registrar", async function(req, res){
   try {
     const {curpComensal, comedor, aportacion} = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL RegistrarComida(?,?,?)", [curpComensal, comedor, aportacion]);
+    await connection.query("CALL registrarComida(?,?,?)", [curpComensal, comedor, aportacion]);
     connection.release();
     res.status(201)
       .send(`${curpComensal} comió e hizo un aporte de ${aportacion}`);
@@ -120,7 +120,7 @@ router.post("/registrar/:depende/:dependiente", async function(req, res){
     const curpDepende = req.params.depende;
     const curpDependiente = req.params.dependiente;
     const connection = await pool.getConnection();
-    await connection.query("CALL RegistrarComidaDependiente(?,?)", [curpDepende, curpDependiente]);
+    await connection.query("CALL registrarComidaDependiente(?,?)", [curpDepende, curpDependiente]);
     connection.release();
     res.status(201).send("Comida de dependiente registrada exitosamente");
   }catch(err) {

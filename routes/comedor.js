@@ -55,7 +55,7 @@ router.get('/nombres', async (req, res) => {
   try {
     // Call the stored procedure to obtain names from the database
     const connection = await pool.getConnection();
-    const rows = await connection.query('CALL ObtenerComedores()');
+    const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
 
     const nombres = rows.map((row) => row.nombre);

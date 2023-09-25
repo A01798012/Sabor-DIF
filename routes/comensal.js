@@ -68,7 +68,7 @@ router.get("/:curp/dependientes", async function(req, res){
   try {
     const curp = req.params.curp;
     const connection = await pool.getConnection();
-    const rows = await connection.query("ObtenerDependientes(?)", [curp]);
+    const rows = await connection.query("mostrarDependientes(?)", [curp]);
     connection.release();
     console.log(rows);
     res.status(200).send(`Enviando dependencias de ${curp}`);
@@ -95,7 +95,7 @@ router.get("/:curp/dependientes", async function(req, res){
 router.get("/todos", async function(req, res){
   try {
     const connection = await pool.getConnection();
-    const rows = await connection.query("CALL ObtenerComensales()", []);
+    const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
     console.log(rows);
     res.status(200).send(`Enviando comensales`);
@@ -136,7 +136,7 @@ router.post("/registrar/dependiente", async function(req, res){
   try {
     const {curpeDepende, curpDependiente} = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL RegistrarDependiente(?,?)", [curpeDepende, curpDependiente]);
+    await connection.query("CALL registrarComidaDependiente(?,?)", [curpeDepende, curpDependiente]);
     connection.release();
     res.status(201).send(`${curpDependiente} depende de ${curpeDepende}`);
   } catch(err) {
@@ -188,7 +188,7 @@ router.post("/registrar", async function(req, res){
       curp,
       genero} = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL InsertarComensal(?, ?, ?, ?, ?)",
+    await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
     res.status(201).send(`${curp} registrado`);
