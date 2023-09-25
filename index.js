@@ -3,6 +3,8 @@ const express = require("express"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express")
 const mariadb = require("mariadb");
+const https = require("https");
+const fs = require("fs");
 const app = express();
 
 //creando una pool para hostear MariaDB
