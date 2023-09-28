@@ -2,18 +2,10 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express")
-const mariadb = require("mariadb");
 const https = require("https");
 const fs = require("fs");
 const app = express();
 
-//creando una pool para hostear MariaDB
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'your_db_user',
-  password: 'your_db_password',
-  database: 'your_db_name',
-});
 
 //Configurando swagger y los formatos
 const options = {
