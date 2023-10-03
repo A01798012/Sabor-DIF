@@ -46,17 +46,17 @@ const pool = mariadb.createPool({
 // Endpoint para obtener dependencias de un comensal
 /**
  * @swagger
- * /comensal/{curp}/dependientes:
+ * /comensal/{id}/dependientes:
  *   get:
  *     summary: Obtener dependientes de un comensal
  *     tags: [Comensal]
  *     parameters:
  *       - in: path
- *         name: curp
+ *         name: id 
  *         required: true
  *         schema:
  *           type: string
- *         description: CURP del comensal
+ *         description: id del responsable del que queremos mostrar sus dependientes
  *     responses:
  *       201:
  *         description: Dependientes obtenidos exitosamente
@@ -64,11 +64,11 @@ const pool = mariadb.createPool({
  *         description: Error interno del servidor
  */
 
-router.get("/:curp/dependientes", async function(req, res){
+router.get("/:id/dependientes", async function(req, res){
   try {
-    const curp = req.params.curp;
+    const idResponsable = req.params.curp;
     const connection = await pool.getConnection();
-    const rows = await connection.query("mostrarDependientes(?)", [curp]);
+    const rows = await connection.query("mostrarDependientes(?)", [idResponsable]);
     connection.release();
     console.log(rows);
     res.status(200).send(`Enviando dependencias de ${curp}`);
@@ -122,8 +122,8 @@ router.get("/todos", async function(req, res){
  *               curpDependiente:
  *                 type: string
  *             required:
- *               - curpDepende
- *               - curpDependiente
+ *               - idDepende 
+ *               - idDependiente 
  *     responses:
  *       201:
  *         description: Dependiente registrado exitosamente
@@ -134,11 +134,11 @@ router.get("/todos", async function(req, res){
 
 router.post("/registrar/dependiente", async function(req, res){
   try {
-    const {curpeDepende, curpDependiente} = req.body;
+    const {idDepende, idDependiente} = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComidaDependiente(?,?)", [curpeDepende, curpDependiente]);
+    await connection.query("CALL registrarComidaDependiente(?,?)", [idDepende, idDependiente]);
     connection.release();
-    res.status(201).send(`${curpDependiente} depende de ${curpeDepende}`);
+    res.status(201).send(`${idDependiente} depende de ${idDepende}`);
   } catch(err) {
     res.status(500);
   }
@@ -191,21 +191,12 @@ router.post("/registrar", async function(req, res){
     await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
+    console.log(res);
     res.status(201).send(`${curp} registrado`);
   }catch(err){
     console.log(err);
     res.status(500).json({message: 'Internal Server Error'});
   }
 });
-
-
-//TODO 
-//TODO 
-
-
-//
-
-
-
 
 module.exports = router;

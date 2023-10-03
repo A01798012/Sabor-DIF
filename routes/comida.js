@@ -15,13 +15,13 @@ const pool = mariadb.createPool({
  *     Comida:
  *       type: object
  *       required:
- *         - curpComensal 
+ *         - idComensal 
  *         - comedor
  *         - aportacion 
  *       properties:
- *         curpComensal:
+ *         idComensal:
  *           type: string
- *           description: El CURP de quien pide la comida
+ *           description: El id de quien pide la comida
  *         comedor:
  *           type: string
  *           description: El nombre del comedor
@@ -35,7 +35,7 @@ const pool = mariadb.createPool({
  *           type: string
  *           description: CURP de persona que depende de curpDepende
  *       example:
- *         curpComensal: d5fE_asz
+ *         idComensal: 12345
  *         comedor: The New Turing Omnibus
  *         aportacion: Alexander K. Dewdney
  *         curpDepende: false
@@ -57,8 +57,8 @@ const pool = mariadb.createPool({
  *           schema:
  *             type: object
  *             properties:
- *               curpComensal:
- *                 type: string
+ *               idComensal:
+ *                 type: int 
  *               comedor:
  *                 type: string
  *               aportacion:
@@ -76,9 +76,9 @@ const pool = mariadb.createPool({
 
 router.post("/registrar", async function(req, res){
   try {
-    const {curpComensal, comedor, aportacion} = req.body;
+    const {idComensal, comedor, aportacion} = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComida(?,?,?)", [curpComensal, comedor, aportacion]);
+    await connection.query("CALL registrarComida(?,?,?)", [idComensal, comedor, aportacion]);
     connection.release();
     res.status(201)
       .send(`${curpComensal} comió e hizo un aporte de ${aportacion}`);
@@ -91,22 +91,22 @@ router.post("/registrar", async function(req, res){
 // Endpoint para registrar comida de un comensal dependiente
 /**
  * @swagger
- * /comida/registrar/{depende}/{dependiente}:
+ * /comida/registrar/{idDepende}/{idDependiente}:
  *   post:
  *     summary: Registrar comida de un comensal dependiente
  *     tags: [Comida]
  *     parameters:
  *       - in: path
- *         name: depende
+ *         name: idDepende 
  *         required: true
  *         schema:
- *           type: string
+ *           type: int 
  *         description: CURP del comensal principal (depende)
  *       - in: path
- *         name: dependiente
+ *         name: idDependiente
  *         required: true
  *         schema:
- *           type: string
+ *           type: int 
  *         description: CURP del comensal dependiente
  *     responses:
  *       201:
@@ -115,12 +115,11 @@ router.post("/registrar", async function(req, res){
  *         description: Error interno del servidor
  */
 
-router.post("/registrar/:depende/:dependiente", async function(req, res){
+router.post("/registrar/:idDepende/:idDependiente", async function(req, res){
   try {
-    const curpDepende = req.params.depende;
-    const curpDependiente = req.params.dependiente;
+    const {idDepende,idDependiente}  = req.params;
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComidaDependiente(?,?)", [curpDepende, curpDependiente]);
+    await connection.query("CALL registrarComidaDependiente(?,?)", [idDepende, idDependiente]);
     connection.release();
     res.status(201).send("Comida de dependiente registrada exitosamente");
   }catch(err) {
