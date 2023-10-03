@@ -4,9 +4,9 @@ const router = express.Router();
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
   host: 'localhost',
-  user: 'your_db_user',
-  password: 'your_db_password',
-  database: 'your_db_name',
+  user: 'root',
+  password: 'pepe',
+  database: 'comedor',
 });
 
 /**
@@ -57,9 +57,9 @@ router.get('/nombres', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
-
+    console.log(rows[0]);
     const nombres = rows.map((row) => row.nombre);
-    res.status(200).json({ nombres });
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
