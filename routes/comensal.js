@@ -119,9 +119,9 @@ router.get("/todos", async function(req, res){
  *           schema:
  *             type: object
  *             properties:
- *               curpDepende:
+ *               idDepende:
  *                 type: string
- *               curpDependiente:
+ *               idDependiente:
  *                 type: string
  *             required:
  *               - idDepende 
@@ -140,7 +140,7 @@ router.post("/registrar/dependiente", async function(req, res){
     const idDependiente = req.body.idDependiente;
     console.log(req.body);
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComidaDependiente(?,?)", [idDepende, idDependiente]);
+    await connection.query("CALL registrarDependencia(?,?)", [idDependiente, idDepende]);
     connection.release();
     res.status(201).send(`${idDependiente} depende de ${idDepende}`);
   } catch(err) {
@@ -186,18 +186,19 @@ router.post("/registrar/dependiente", async function(req, res){
 
 router.post("/registrar", async function(req, res){
   try {
+    console.log(req.body);
+
     const {nombreComensal, 
       apellidoPaterno,
       apellidoMaterno, 
       curp,
       genero} = req.body;
-      
     const connection = await pool.getConnection();
-    await connection.query("SELECT registrarComensal(?, ?, ?, ?, ?)",
+    const rows = await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
     console.log(res);
-    res.status(201).send(`${curp} registrado`);
+    res.status(201).send(rows[0][0]);
   }catch(err){
     console.log(err);
     res.status(500).json({message: 'Internal Server Error'});

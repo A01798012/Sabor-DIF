@@ -60,10 +60,12 @@ const pool = mariadb.createPool({
  *             properties:
  *               idComensal:
  *                 type: int 
- *               comedor:
+ *               idComedor:
  *                 type: string
  *               aportacion:
  *                 type: float 
+ *               paraLlevar:
+ *                 type: int
  *             required:
  *               - curpComensal
  *               - comedor
@@ -77,12 +79,14 @@ const pool = mariadb.createPool({
 
 router.post("/registrar", async function(req, res){
   try {
-    const {idComensal, comedor, aportacion} = req.body;
+    const {idComensal, idComedor, aportacion, paraLlevar } = req.body;
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComida(?,?,?)", [idComensal, comedor, aportacion]);
+    console.log(req.body);
+
+    await connection.query("CALL registrarComida(?,?,?,?)", [idComensal, idComedor, aportacion, paraLlevar]);
     connection.release();
     res.status(201)
-      .send(`${curpComensal} comió e hizo un aporte de ${aportacion}`);
+      .send({message: "OK"});
   }catch(err) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -92,7 +96,7 @@ router.post("/registrar", async function(req, res){
 // Endpoint para registrar comida de un comensal dependiente
 /**
  * @swagger
- * /comida/registrar/{idDepende}/{idDependiente}:
+ * /comida/registrar/dependiente:
  *   post:
  *     summary: Registrar comida de un comensal dependiente
  *     tags: [Comida]
@@ -116,15 +120,17 @@ router.post("/registrar", async function(req, res){
  *         description: Error interno del servidor
  */
 
-router.post("/registrar/:idDepende/:idDependiente", async function(req, res){
+router.post("/registrar/dependiente", async function(req, res){
   try {
-    const {idDepende,idDependiente}  = req.params;
+    const {idComedor,idDependiente, idDepende, aportacion, paraLlevar}  = req.body;
+    console.log(req.body);
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComidaDependiente(?,?)", [idDepende, idDependiente]);
+    await connection.query("CALL registrarComidaDependiente(?,?,?,?,?)", [idComedor,idDependiente, idDepende, aportacion, paraLlevar]);
     connection.release();
     res.status(201).send("Comida de dependiente registrada exitosamente");
   }catch(err) {
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' , error: err});
   }
 });
 module.exports = router;

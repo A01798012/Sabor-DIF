@@ -221,13 +221,13 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE `registrarComida`(
 	IN `IdComensalV` INT,
-	IN `comedorV` VARCHAR(50),
+	IN `IdComedor` INT,
 	IN `aportacionV` INT,
 	IN `paraLlevar` INT
 )
 BEGIN
 
-INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, paraLlevar) VALUES ((SELECT IdComedor FROM comedor WHERE NombreComedor = comedorV), IdComensalV, 
+INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, paraLlevar) VALUES (IdComedor, IdComensalV, 
 aportacionV, CURDATE(), paraLlevar);
 
 END//
@@ -236,7 +236,7 @@ DELIMITER ;
 -- Volcando estructura para procedimiento comedor.registrarComidaDependiente
 DELIMITER //
 CREATE PROCEDURE `registrarComidaDependiente`(
-	IN `comedorV` VARCHAR(50),
+	IN `IdComedor` INT,
 	IN `IdDependienteV` INT,
 	IN `IdCuidadorV` INT,
 	IN `aportacionV` INT,
@@ -244,7 +244,7 @@ CREATE PROCEDURE `registrarComidaDependiente`(
 )
 BEGIN
 
-INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES ((SELECT IdComedor FROM comedor WHERE NombreComedor = comedorV), 
+INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (IdComedor, 
 IdDependienteV, aportacionV, CURDATE(), (SELECT IdRelacion FROM relacionpersonadependiente WHERE IdCuidador = IdCuidadorV AND IdDependiente = IdDependienteV), paraLlevarV);
 
 END//
@@ -339,17 +339,18 @@ DELIMITER ;
 
 -- Volcando estructura para función comedor.registrarComensal
 DELIMITER //
-CREATE FUNCTION `registrarComensal`(`nombresV` VARCHAR(50),
-	`apellidoPaternoV` VARCHAR(50),
-	`apellidoMaternoV` VARCHAR(50),
-	`curpV` VARCHAR(50),
-	`generoV` INT
-) RETURNS int(11)
+CREATE PROCEDURE `registrarComensal`(
+	IN `nombresV` VARCHAR(50),
+	IN `apellidoPaternoV` VARCHAR(50),
+	IN `apellidoMaternoV` VARCHAR(50),
+	IN `curpV` VARCHAR(50),
+	IN `generoV` INT
+)
 BEGIN
 
 INSERT INTO comensal (Nombres, ApellidoPaterno, ApellidoMaterno, curp, genero) VALUES (nombresV, apellidoPaternoV, apellidoMaternoV, curpV, generoV);
 
-RETURN (SELECT IdComensal FROM comensal WHERE curp = curpV);
+SELECT IdComensal FROM comensal WHERE curp = curpV;
 
 END//
 DELIMITER ;
