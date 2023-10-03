@@ -4,10 +4,11 @@ const router = express.Router();
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
   host: 'localhost',
-  user: 'your_db_user',
-  password: 'your_db_password',
-  database: 'your_db_name',
+  user: 'root',
+  password: 'pepe',
+  database: 'comedor',
 });
+
 /**
  * @swagger
  * components:
@@ -46,16 +47,16 @@ const pool = mariadb.createPool({
 // Endpoint para obtener dependencias de un comensal
 /**
  * @swagger
- * /comensal/{id}/dependientes:
+ * /comensal/dependientes/{idResponsable}:
  *   get:
  *     summary: Obtener dependientes de un comensal
  *     tags: [Comensal]
  *     parameters:
  *       - in: path
- *         name: id 
+ *         name: idResponsable 
  *         required: true
  *         schema:
- *           type: string
+ *           type: int
  *         description: id del responsable del que queremos mostrar sus dependientes
  *     responses:
  *       201:
@@ -64,14 +65,15 @@ const pool = mariadb.createPool({
  *         description: Error interno del servidor
  */
 
-router.get("/:id/dependientes", async function(req, res){
+router.get("/dependientes/:idResponsable", async function(req, res){
   try {
-    const idResponsable = req.params.curp;
+    const idResponsable = (req.params.idResponsable);
+    console.log(idResponsable);
     const connection = await pool.getConnection();
-    const rows = await connection.query("mostrarDependientes(?)", [idResponsable]);
+    const rows = await connection.query("CALL mostrarDependientes(?)", [idResponsable]);
     connection.release();
-    console.log(rows);
-    res.status(200).send(`Enviando dependencias de ${curp}`);
+    console.log(rows[0]);
+    res.status(200).send(rows[0]);
   }catch(err) {
     res.status(500);
 
@@ -97,8 +99,8 @@ router.get("/todos", async function(req, res){
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
-    console.log(rows);
-    res.status(200).send(`Enviando comensales`);
+    console.log(rows[0]);
+    res.status(200).send(rows[0]);
   }catch(err) {
     res.status(err);
   }
@@ -131,10 +133,12 @@ router.get("/todos", async function(req, res){
  *         description: Error interno del servidor
  */
 
-
+/// ????
 router.post("/registrar/dependiente", async function(req, res){
   try {
-    const {idDepende, idDependiente} = req.body;
+    const idDepende = req.body.idDepende;
+    const idDependiente = req.body.idDependiente;
+    console.log(req.body);
     const connection = await pool.getConnection();
     await connection.query("CALL registrarComidaDependiente(?,?)", [idDepende, idDependiente]);
     connection.release();
@@ -187,8 +191,9 @@ router.post("/registrar", async function(req, res){
       apellidoMaterno, 
       curp,
       genero} = req.body;
+      
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
+    await connection.query("SELECT registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
     console.log(res);
