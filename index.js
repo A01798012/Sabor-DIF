@@ -49,11 +49,15 @@ const comedorRouter = require("./routes/comedor.js");
 const comensalRouter = require("./routes/comensal.js");
 const comidaRouter = require("./routes/comida.js");
 const responsableRouter = require("./routes/responsable.js");
+const condicionRouter = require("./routes/condicion.js");
+const aperturaRouter = require("./routes/apertura.js");
 
 app.use("/api/comedor", comedorRouter);
 app.use("/api/comensal", comensalRouter);
 app.use("/api/comida", comidaRouter);
 app.use("/api/responsable", responsableRouter);
+app.use("/api/condicion", condicionRouter);
+app.use("/api/apertura", aperturaRouter);
 
 const port = 3000;
 app.listen(port, () => console.log(`Listening on port http://10.48.87.62:${port}...`))
