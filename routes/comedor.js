@@ -59,7 +59,7 @@ router.get('/nombres', async (req, res) => {
     connection.release();
     console.log(rows[0]);
     const nombres = rows.map((row) => row.nombre);
-    res.status(200).json(rows[0]);
+    res.status(200).json({message: "OK", rows: rows[0]});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

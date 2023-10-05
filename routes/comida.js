@@ -127,7 +127,7 @@ router.post("/registrar/dependiente", async function(req, res){
     const connection = await pool.getConnection();
     await connection.query("CALL registrarComidaDependiente(?,?,?,?,?)", [idComedor,idDependiente, idDepende, aportacion, paraLlevar]);
     connection.release();
-    res.status(201).send("Comida de dependiente registrada exitosamente");
+    res.status(201).send({message: "OK"});
   }catch(err) {
     console.log(err);
     res.status(500).json({ message: 'Internal Server Error' , error: err});

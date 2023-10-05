@@ -73,7 +73,7 @@ router.get("/dependientes/:idResponsable", async function(req, res){
     const rows = await connection.query("CALL mostrarDependientes(?)", [idResponsable]);
     connection.release();
     console.log(rows[0]);
-    res.status(200).send(rows[0]);
+    res.status(200).send({message:"OK", rows: rows[0]});
   }catch(err) {
     res.status(500);
 
@@ -100,7 +100,7 @@ router.get("/todos", async function(req, res){
     const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
     console.log(rows[0]);
-    res.status(200).send(rows[0]);
+    res.status(200).send({message:"OK", rows: rows[0]});
   }catch(err) {
     res.status(err);
   }
@@ -142,7 +142,7 @@ router.post("/registrar/dependiente", async function(req, res){
     const connection = await pool.getConnection();
     await connection.query("CALL registrarDependencia(?,?)", [idDependiente, idDepende]);
     connection.release();
-    res.status(201).send(`${idDependiente} depende de ${idDepende}`);
+    res.status(201).send({message: "OK"});
   } catch(err) {
     res.status(500);
   }
@@ -198,7 +198,7 @@ router.post("/registrar", async function(req, res){
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
     console.log(res);
-    res.status(201).send(rows[0][0]);
+    res.status(201).send({message: "OK", idComensal: rows[0][0]});
   }catch(err){
     console.log(err);
     res.status(500).json({message: 'Internal Server Error'});
