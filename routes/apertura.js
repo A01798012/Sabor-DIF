@@ -55,7 +55,7 @@ const pool = mariadb.createPool({
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/registrar', async (req, res) => {
+router.post('/registrar', async (req, res) => {
   try {
     // Call the stored procedure to obtain names from the database
     const {nombreComedor, abierto} = req.body
