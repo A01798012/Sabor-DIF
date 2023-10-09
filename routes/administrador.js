@@ -11,16 +11,16 @@ const pool = mariadb.createPool({
 /**
  * @swagger
  * tags:
- *   name: Responsable 
- *   description: Endpoints relacionados con los comensales
+ *   name: Administrador
+ *   description: Endpoints relacionados con los administradores 
  */
 
 /**
  * @swagger
- * api/responsable/login:
+ * api/administradores/login:
  *   post:
  *     summary: Iniciar sesión
- *     tags: [Responsable]
+ *     tags: [Administrador]
  *     requestBody:
  *       required: true
  *       content:
@@ -33,7 +33,7 @@ const pool = mariadb.createPool({
  *               pswd:
  *                 type: string
  *             required:
- *               - nombreComedor
+ *               - nombreAdmin 
  *               - pswd
  *     responses:
  *       201:
@@ -54,10 +54,10 @@ const pool = mariadb.createPool({
  */
 router.post("/login", async function(req, res){
   try {
-    const {nombreComedor, pswd} = req.body;
+    const {nombreAdmin, pswd} = req.body;
 console.log(req.body);
     const connection = await pool.getConnection();
-    const rows = await connection.query("SELECT loginResponsable(?,?)", [nombreComedor, pswd]);
+    const rows = await connection.query("SELECT loginAdmin(?,?)", [nombreAdmin, pswd]);
     connection.release();
     console.log(rows[0]);
     res.status(201).send({message: "OK", access: rows[0]});

@@ -4,9 +4,9 @@ const router = express.Router();
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
   host: 'localhost',
-  user: 'your_db_user',
-  password: 'your_db_password',
-  database: 'your_db_name',
+  user: 'root',
+  password: 'pepe',
+  database: 'comedor',
 });
 
 /**
@@ -16,39 +16,41 @@ const pool = mariadb.createPool({
  *     Comedor:
  *       type: object
  *       required:
- *         - nombre 
+ *         - idComedor 
  *       properties:
  *         nombre:
  *           type: string
- *           description: nombre del comedor
+ *           description: Nombre del comedor
  *       example:
- *         nombre: idk
+ *         idComedor: C2LosOlivos
  */
 
 // Endpoint para obtener nombres de comedores
 /**
  * @swagger
- * tags:
- *   name: Comedor 
- * /comedor/nombres:
+ * api/comedor/nombres:
  *   get:
  *     summary: Obtener nombres de comedores
  *     tags: [Comedor]
  *     responses:
  *       200:
- *         description: Nombres de comedores obtenidos exitosamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 nombres:
- *                   type: array
- *                   items:
- *                     type: string
- *                   description: Lista de nombres de comedores
- *       500:
- *         description: Error interno del servidor
+ *        description: A list of comedor names
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: A status message indicating success.
+ *                rows:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      NombreComedor:
+ *                        type: string
+ *                        description: The name of a comedor. 
  */
 
 router.get('/nombres', async (req, res) => {
@@ -57,9 +59,9 @@ router.get('/nombres', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
-
+    console.log(rows[0]);
     const nombres = rows.map((row) => row.nombre);
-    res.status(200).json({ nombres });
+    res.status(200).json({message: "OK", rows: rows[0]});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
