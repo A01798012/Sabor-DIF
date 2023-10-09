@@ -291,7 +291,7 @@ BEGIN
     DECLARE p_Success INT;
     
     -- Obtener el valor de la contraseña almacenada y el salt asociado
-    SELECT contra INTO v_StoredPassword FROM admin WHERE usuario = usuarioV;
+    SELECT contra INTO v_StoredPassword FROM administradores WHERE usuario = usuarioV;
     SELECT SUBSTRING(v_StoredPassword, 1, 16) INTO v_Salt;
    
     -- Calcular el hash de la contraseña ingresada con el salt
