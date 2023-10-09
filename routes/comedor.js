@@ -16,39 +16,41 @@ const pool = mariadb.createPool({
  *     Comedor:
  *       type: object
  *       required:
- *         - nombre 
+ *         - idComedor 
  *       properties:
  *         nombre:
  *           type: string
- *           description: nombre del comedor
+ *           description: Nombre del comedor
  *       example:
- *         nombre: idk
+ *         idComedor: C2LosOlivos
  */
 
 // Endpoint para obtener nombres de comedores
 /**
  * @swagger
- * tags:
- *   name: Comedor 
- * /comedor/nombres:
+ * api/comedor/nombres:
  *   get:
  *     summary: Obtener nombres de comedores
  *     tags: [Comedor]
  *     responses:
  *       200:
- *         description: Nombres de comedores obtenidos exitosamente
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 nombres:
- *                   type: array
- *                   items:
- *                     type: string
- *                   description: Lista de nombres de comedores
- *       500:
- *         description: Error interno del servidor
+ *        description: A list of comedor names
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: A status message indicating success.
+ *                rows:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      NombreComedor:
+ *                        type: string
+ *                        description: The name of a comedor. 
  */
 
 router.get('/nombres', async (req, res) => {

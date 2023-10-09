@@ -44,73 +44,103 @@ const pool = mariadb.createPool({
  *         curp: PEGJ850315HJCRRN07
  *         genero: H
  */
-// Endpoint para obtener dependencias de un comensal
 /**
  * @swagger
- * /comensal/dependientes/{idResponsable}:
+ * api/comensal/dependientes/{idResponsable}:
  *   get:
- *     summary: Obtener dependientes de un comensal
+ *     summary: Obtener dependientes de un responsable
  *     tags: [Comensal]
  *     parameters:
  *       - in: path
- *         name: idResponsable 
+ *         name: idResponsable
  *         required: true
+ *         description: ID del responsable
  *         schema:
- *           type: int
- *         description: id del responsable del que queremos mostrar sus dependientes
+ *           type: string
  *     responses:
- *       201:
+ *       200:
  *         description: Dependientes obtenidos exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de éxito
+ *                 rows:
+ *                   type: array
+ *                   description: Lista de dependientes
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error
  */
-
 router.get("/dependientes/:idResponsable", async function(req, res){
   try {
-    const idResponsable = (req.params.idResponsable);
-    console.log(idResponsable);
+    const idResponsable = req.params.idResponsable;
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarDependientes(?)", [idResponsable]);
     connection.release();
-    console.log(rows[0]);
-    res.status(200).send({message:"OK", rows: rows[0]});
-  }catch(err) {
-    res.status(500);
-
+    res.status(200).send({ message: "Dependientes obtenidos exitosamente", rows: rows[0] });
+  } catch(err) {
+    res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
 
-// Endpoint para obtener todos los comensales registrados
 /**
  * @swagger
- * /comensal/todos:
+ * api/comensal/todos:
  *   get:
  *     summary: Obtener todos los comensales registrados
  *     tags: [Comensal]
  *     responses:
- *       201:
+ *       200:
  *         description: Comensales obtenidos exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de éxito
+ *                 rows:
+ *                   type: array
+ *                   description: Lista de comensales
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error
  */
-
 router.get("/todos", async function(req, res){
   try {
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
-    console.log(rows[0]);
-    res.status(200).send({message:"OK", rows: rows[0]});
-  }catch(err) {
-    res.status(err);
+    res.status(200).send({ message: "Comensales obtenidos exitosamente", rows: rows[0] });
+  } catch(err) {
+    res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
-// Endpoint para insertar/registrar un dependiente  
+
 /**
  * @swagger
- * /comensal/registrar/dependiente:
+ * api/comensal/registrar/dependiente:
  *   post:
- *     summary: Registrar un nuevo dependiente 
+ *     summary: Registrar un nuevo dependiente
  *     tags: [Comensal]
  *     requestBody:
  *       required: true
@@ -129,28 +159,41 @@ router.get("/todos", async function(req, res){
  *     responses:
  *       201:
  *         description: Dependiente registrado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de éxito
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error
  */
-
-/// ????
 router.post("/registrar/dependiente", async function(req, res){
   try {
     const idDepende = req.body.idDepende;
     const idDependiente = req.body.idDependiente;
-    console.log(req.body);
     const connection = await pool.getConnection();
     await connection.query("CALL registrarDependencia(?,?)", [idDependiente, idDepende]);
     connection.release();
-    res.status(201).send({message: "OK"});
+    res.status(201).send({ message: "Dependiente registrado exitosamente" });
   } catch(err) {
-    res.status(500);
+    res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
-// Endpoint para insertar/registrar un comensal
+
 /**
  * @swagger
- * /comensal/registrar:
+ * api/comensal/registrar:
  *   post:
  *     summary: Registrar un nuevo comensal
  *     tags: [Comensal]
@@ -180,28 +223,22 @@ router.post("/registrar/dependiente", async function(req, res){
  *     responses:
  *       201:
  *         description: Comensal registrado exitosamente
- *       500:
- *         description: Error interno del servidor
- */
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */ 
 
 router.post("/registrar", async function(req, res){
   try {
-    console.log(req.body);
-
-    const {nombreComensal, 
-      apellidoPaterno,
-      apellidoMaterno, 
-      curp,
-      genero} = req.body;
+    const { nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero } = req.body;
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
-    console.log(res);
-    res.status(201).send({message: "OK", idComensal: rows[0][0]});
-  }catch(err){
-    console.log(err);
-    res.status(500).json({message: 'Internal Server Error'});
+    res.status(201).send({ message: "OK", idComensal: rows[0][0] });
+  } catch(err) {
+    res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
 

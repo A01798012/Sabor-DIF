@@ -34,7 +34,7 @@ const pool = mariadb.createPool({
  * @swagger
  * tags:
  *   name: Apertura 
- * /apertura/registrar:
+ * api/apertura/registrar:
  *   post:
  *     summary: Registrar apertura de un comedor
  *     tags: [Apertura]
@@ -50,7 +50,7 @@ const pool = mariadb.createPool({
  *                   type: string 
  *                   description: Lista de nombres de comedores
  *                 abierto:
- *                   type: int
+ *                   type: integer
  *                   description: 1 si abre, 0 si no
  *       500:
  *         description: Error interno del servidor

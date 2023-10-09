@@ -47,7 +47,7 @@ const pool = mariadb.createPool({
 /**
  * @swagger
  * tags: Comida
- * /comida/registrar:
+ * api/comida/registrar:
  *   post:
  *     summary: Registrar comida de un comensal
  *     tags: [Comida]
@@ -59,13 +59,13 @@ const pool = mariadb.createPool({
  *             type: object
  *             properties:
  *               idComensal:
- *                 type: int 
+ *                 type: integer 
  *               idComedor:
- *                 type: string
+ *                 type: integer 
  *               aportacion:
- *                 type: float 
+ *                 type: number 
  *               paraLlevar:
- *                 type: int
+ *                 type: integer
  *             required:
  *               - curpComensal
  *               - comedor
@@ -96,7 +96,7 @@ router.post("/registrar", async function(req, res){
 // Endpoint para registrar comida de un comensal dependiente
 /**
  * @swagger
- * /comida/registrar/dependiente:
+ * api/comida/registrar/dependiente:
  *   post:
  *     summary: Registrar comida de un comensal dependiente
  *     tags: [Comida]
@@ -105,13 +105,13 @@ router.post("/registrar", async function(req, res){
  *         name: idDepende 
  *         required: true
  *         schema:
- *           type: int 
+ *           type: integer 
  *         description: CURP del comensal principal (depende)
  *       - in: path
  *         name: idDependiente
  *         required: true
  *         schema:
- *           type: int 
+ *           type: integer
  *         description: CURP del comensal dependiente
  *     responses:
  *       201:
