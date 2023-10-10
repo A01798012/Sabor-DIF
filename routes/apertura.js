@@ -1,13 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
+const pool = require("./db")
 
 /**
  * @swagger
