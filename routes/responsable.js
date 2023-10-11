@@ -54,7 +54,7 @@ console.log(req.body);
     const rows = await connection.query("SELECT loginResponsable(?,?)", [nombreComedor, pswd]);
     connection.release();
     console.log(rows[0]);
-    res.status(201).send({message: "OK", access: rows[0]});
+    res.status(201).send(rows[0]);
   } catch(err) {
     res.status(500);
   }

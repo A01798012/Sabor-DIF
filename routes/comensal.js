@@ -229,7 +229,7 @@ router.post("/registrar", async function(req, res){
     const rows = await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
-    res.status(201).send({ message: "OK", idComensal: rows[0][0] });
+    res.status(201).send(rows[0][0]);
   } catch(err) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }

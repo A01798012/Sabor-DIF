@@ -54,7 +54,6 @@ router.get('/nombres', async (req, res) => {
     const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
     console.log(rows[0]);
-    const nombres = rows.map((row) => row.nombre);
     res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
