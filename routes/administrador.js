@@ -54,7 +54,7 @@ console.log(req.body);
     const rows = await connection.query("SELECT loginAdmin(?,?)", [nombreAdmin, pswd]);
     connection.release();
     console.log(rows[0]);
-    res.status(201).send(rows[0]);
+    res.status(201).send({access:rows[0][`loginAdmin('${nombreAdmin}','${pswd}')`]});
   } catch(err) {
     res.status(500);
   }
