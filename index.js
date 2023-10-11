@@ -5,7 +5,9 @@ const express = require("express"),
 const https = require("https");
 const fs = require("fs");
 const app = express();
-
+app.use(express.json())
+const cors = require("cors");
+app.use(cors());
 
 //Configurando swagger y los formatos
 const options = {
@@ -41,10 +43,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, {explorer: true})
 );
-const cors = require("cors");
 
-app.use(express.json())
-app.use(cors());
 const comedorRouter = require("./routes/comedor.js");
 const comensalRouter = require("./routes/comensal.js");
 const comidaRouter = require("./routes/comida.js");
