@@ -51,7 +51,7 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
-    res.status(200).json({message: "OK", rows: rows[0]});
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -90,7 +90,7 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
-    res.status(200).json({message: "OK", rows: rows[0]});
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

@@ -81,7 +81,7 @@ router.get("/dependientes/:idResponsable", async function(req, res){
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarDependientes(?)", [idResponsable]);
     connection.release();
-    res.status(200).send({ message: "Dependientes obtenidos exitosamente", rows: rows[0] });
+    res.status(200).send(rows[0]);
   } catch(err) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }
@@ -123,7 +123,7 @@ router.get("/todos", async function(req, res){
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
-    res.status(200).send({ message: "Comensales obtenidos exitosamente", rows: rows[0] });
+    res.status(200).send(rows[0]);
   } catch(err) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }
