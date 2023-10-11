@@ -24,8 +24,9 @@ CREATE TABLE IF NOT EXISTS `administradores` (
   `IdAdmin` int(11) NOT NULL AUTO_INCREMENT,
   `Usuario` varchar(50) NOT NULL,
   `Contra` varchar(80) NOT NULL,
-  PRIMARY KEY (`IdAdmin`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  PRIMARY KEY (`IdAdmin`),
+  UNIQUE KEY `Usuario` (`Usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -51,12 +52,12 @@ CREATE TABLE IF NOT EXISTS `comensal` (
   `Nombres` varchar(100) NOT NULL,
   `ApellidoPaterno` varchar(100) DEFAULT NULL,
   `ApellidoMaterno` varchar(100) DEFAULT NULL,
-  `CURP` varchar(18) NOT NULL,
+  `CURP` varchar(18) DEFAULT NULL,
   `Genero` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`IdComensal`) USING BTREE,
   UNIQUE KEY `CURP` (`CURP`),
   UNIQUE KEY `IdPersona` (`IdComensal`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `comida` (
   CONSTRAINT `FK_comida_comedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_idComensal` FOREIGN KEY (`IdComensal`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_relacionpersonadependiente` FOREIGN KEY (`IdRelacion`) REFERENCES `relacionpersonadependiente` (`IdRelacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `condicion` (
   `IdCondicion` int(11) NOT NULL AUTO_INCREMENT,
   `nombreCondicion` varchar(50) NOT NULL,
   PRIMARY KEY (`IdCondicion`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -107,13 +108,14 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `IdEncuesta` int(11) NOT NULL AUTO_INCREMENT,
   `IdComedor` int(11) NOT NULL DEFAULT 0,
   `Higiene` int(11) NOT NULL DEFAULT 0,
-  `Comida` int(11) NOT NULL DEFAULT 0,
+  `Sabor` int(11) NOT NULL DEFAULT 0,
   `Atencion` int(11) NOT NULL DEFAULT 0,
   `Tiempo` int(11) NOT NULL DEFAULT 0,
+  `Lugar` int(11) DEFAULT NULL,
   PRIMARY KEY (`IdEncuesta`),
   KEY `IdComedor` (`IdComedor`),
   CONSTRAINT `FK_encuesta_IdComedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -122,13 +124,12 @@ CREATE TABLE IF NOT EXISTS `relacionpersonadependiente` (
   `IdRelacion` int(11) NOT NULL AUTO_INCREMENT,
   `IdCuidador` int(11) NOT NULL,
   `IdDependiente` int(11) NOT NULL,
-  PRIMARY KEY (`IdRelacion`),
+  PRIMARY KEY (`IdDependiente`,`IdCuidador`) USING BTREE,
   UNIQUE KEY `IdRelacion` (`IdRelacion`),
-  KEY `IdResponsable` (`IdCuidador`) USING BTREE,
-  KEY `FK_relacionPersonaDependiente` (`IdDependiente`),
-  CONSTRAINT `FK_relacionPersonaDependiente` FOREIGN KEY (`IdDependiente`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_relacionPersonaDependiente_idComensal` FOREIGN KEY (`IdCuidador`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  KEY `FK_IdCuidador` (`IdCuidador`),
+  CONSTRAINT `FK_IdCuidador` FOREIGN KEY (`IdCuidador`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_IdDependiente` FOREIGN KEY (`IdDependiente`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -217,17 +218,35 @@ INSERT INTO responsableabrecomedor (IdComedor, abierto, fecha) VALUES ((SELECT I
 END//
 DELIMITER ;
 
+-- Volcando estructura para procedimiento comedor.registrarComensal
+DELIMITER //
+CREATE PROCEDURE `registrarComensal`(
+	IN `nombresV` VARCHAR(50),
+	IN `apellidoPaternoV` VARCHAR(50),
+	IN `apellidoMaternoV` VARCHAR(50),
+	IN `curpV` VARCHAR(50),
+	IN `generoV` INT
+)
+BEGIN
+
+INSERT INTO comensal (Nombres, ApellidoPaterno, ApellidoMaterno, curp, genero) VALUES (nombresV, apellidoPaternoV, apellidoMaternoV, curpV, generoV);
+
+SELECT IdComensal FROM comensal WHERE curp = curpV;
+
+END//
+DELIMITER ;
+
 -- Volcando estructura para procedimiento comedor.registrarComida
 DELIMITER //
 CREATE PROCEDURE `registrarComida`(
 	IN `IdComensalV` INT,
-	IN `IdComedor` INT,
+	IN `IdComedorV` INT,
 	IN `aportacionV` INT,
 	IN `paraLlevar` INT
 )
 BEGIN
 
-INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, paraLlevar) VALUES (IdComedor, IdComensalV, 
+INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, paraLlevar) VALUES (IdComedorV, IdComensalV, 
 aportacionV, CURDATE(), paraLlevar);
 
 END//
@@ -236,7 +255,7 @@ DELIMITER ;
 -- Volcando estructura para procedimiento comedor.registrarComidaDependiente
 DELIMITER //
 CREATE PROCEDURE `registrarComidaDependiente`(
-	IN `IdComedor` INT,
+	IN `comedorV` VARCHAR(50),
 	IN `IdDependienteV` INT,
 	IN `IdCuidadorV` INT,
 	IN `aportacionV` INT,
@@ -244,7 +263,7 @@ CREATE PROCEDURE `registrarComidaDependiente`(
 )
 BEGIN
 
-INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (IdComedor, 
+INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES ((SELECT IdComedor FROM comedor WHERE NombreComedor = comedorV), 
 IdDependienteV, aportacionV, CURDATE(), (SELECT IdRelacion FROM relacionpersonadependiente WHERE IdCuidador = IdCuidadorV AND IdDependiente = IdDependienteV), paraLlevarV);
 
 END//
@@ -278,6 +297,23 @@ INSERT INTO relacionpersonadependiente (IdCuidador, IdDependiente) VALUES (IdCui
 END//
 DELIMITER ;
 
+-- Volcando estructura para procedimiento comedor.registrarEncuesta
+DELIMITER //
+CREATE PROCEDURE `registrarEncuesta`(
+	IN `IdComedor` INT,
+	IN `atencion` INT,
+	IN `higiene` INT,
+	IN `sabor` INT,
+	IN `lugar` INT,
+	IN `tiempo` INT
+)
+BEGIN
+
+INSERT INTO encuesta (IdComedor, Higiene, Sabor, Atencion,  Tiempo, Lugar) VALUES (IdComedor, atencion, higiene, sabor, tiempo, lugar);
+
+END//
+DELIMITER ;
+
 -- Volcando estructura para función comedor.loginAdmin
 DELIMITER //
 CREATE FUNCTION `loginAdmin`(`usuarioV` VARCHAR(50),
@@ -291,7 +327,7 @@ BEGIN
     DECLARE p_Success INT;
     
     -- Obtener el valor de la contraseña almacenada y el salt asociado
-    SELECT contra INTO v_StoredPassword FROM admin WHERE usuario = usuarioV;
+    SELECT contra INTO v_StoredPassword FROM administradores WHERE usuario = usuarioV;
     SELECT SUBSTRING(v_StoredPassword, 1, 16) INTO v_Salt;
    
     -- Calcular el hash de la contraseña ingresada con el salt
@@ -320,38 +356,17 @@ BEGIN
     DECLARE v_HashedPassword VARCHAR(300);
     DECLARE p_Success INT;
     
-    -- Obtener el valor de la contraseña almacenada y el salt asociado
     SELECT contra INTO v_StoredPassword FROM responsable WHERE IdComedor = (SELECT IdComedor FROM comedor WHERE nombreComedor = v_NombreComedor);
     SELECT SUBSTRING(v_StoredPassword, 1, 16) INTO v_Salt;
    
-    -- Calcular el hash de la contraseña ingresada con el salt
     SET v_HashedPassword = CONCAT(v_Salt, UNHEX(SHA2(CONCAT(v_Salt, p_Password), 256)));
     
-    -- Comparar el hash calculado con el almacenado y establecer p_Success en 1 si coinciden
     IF v_HashedPassword = v_StoredPassword THEN
         SET p_Success = 1;
     ELSE
         SET p_Success = 0;
     END IF;
     RETURN p_Success;
-END//
-DELIMITER ;
-
--- Volcando estructura para función comedor.registrarComensal
-DELIMITER //
-CREATE PROCEDURE `registrarComensal`(
-	IN `nombresV` VARCHAR(50),
-	IN `apellidoPaternoV` VARCHAR(50),
-	IN `apellidoMaternoV` VARCHAR(50),
-	IN `curpV` VARCHAR(50),
-	IN `generoV` INT
-)
-BEGIN
-
-INSERT INTO comensal (Nombres, ApellidoPaterno, ApellidoMaterno, curp, genero) VALUES (nombresV, apellidoPaternoV, apellidoMaternoV, curpV, generoV);
-
-SELECT IdComensal FROM comensal WHERE curp = curpV;
-
 END//
 DELIMITER ;
 
