@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `comida` (
   CONSTRAINT `FK_comida_comedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_idComensal` FOREIGN KEY (`IdComensal`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_relacionpersonadependiente` FOREIGN KEY (`IdRelacion`) REFERENCES `relacionpersonadependiente` (`IdRelacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -139,15 +139,15 @@ CREATE TABLE IF NOT EXISTS `responsable` (
   `Nombres` varchar(100) NOT NULL,
   `ApellidoPaterno` varchar(100) NOT NULL,
   `ApellidoMaterno` varchar(100) NOT NULL,
-  `Celular` bigint(20) DEFAULT NULL,
+  `Celular` varchar(50) DEFAULT NULL,
   `IdComedor` int(11) NOT NULL,
   `Contra` varchar(80) NOT NULL,
   PRIMARY KEY (`IdResponsable`) USING BTREE,
   UNIQUE KEY `IdAdmin` (`IdResponsable`) USING BTREE,
+  UNIQUE KEY `IdComedor` (`IdComedor`),
   UNIQUE KEY `Celular` (`Celular`),
-  KEY `FK_responsableIdComedor` (`IdComedor`),
   CONSTRAINT `FK_responsableIdComedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -202,6 +202,22 @@ BEGIN
 SELECT IdComensal, nombres, apellidoPaterno, apellidoMaterno FROM comensal WHERE IdComensal IN (SELECT relacionpersonadependiente.IdDependiente FROM relacionpersonadependiente 
 JOIN comensal ON comensal.IdComensal = relacionpersonadependiente.IdCuidador WHERE IdComensal = IdComensalV);
 
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.mostrarDonadasVendidas
+DELIMITER //
+CREATE PROCEDURE `mostrarDonadasVendidas`(
+	IN `IdComedorV` INT
+)
+BEGIN
+
+SELECT 
+    COUNT(IF(aportacion = 13,1 , NULL)) AS TotalComidasVendidas,
+    COUNT(IF(aportacion = 0, 1, NULL)) AS TotalComidasDonadas
+FROM
+    comida
+WHERE fecha = CURDATE() AND IdComedor LIKE IdComedorV;
 END//
 DELIMITER ;
 
@@ -309,7 +325,7 @@ CREATE PROCEDURE `registrarEncuesta`(
 )
 BEGIN
 
-INSERT INTO encuesta (IdComedor, Higiene, Sabor, Atencion,  Tiempo, Lugar) VALUES (IdComedor, atencion, higiene, sabor, tiempo, lugar);
+INSERT INTO encuesta (IdComedor, Higiene, Sabor, Atencion, Tiempo, Lugar) VALUES (IdComedor, atencion, higiene, sabor, tiempo, lugar);
 
 END//
 DELIMITER ;
