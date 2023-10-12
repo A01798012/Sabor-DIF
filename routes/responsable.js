@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const date = require("./date")
 
 const pool = require("./db")
 /**
@@ -53,9 +54,10 @@ console.log(req.body);
     const connection = await pool.getConnection();
     const rows = await connection.query("SELECT loginResponsable(?,?)", [nombreComedor, pswd]);
     connection.release();
-    console.log(rows[0]);
+    console.log(...date(`Inicio de sesion de responsable ${rows[0][`loginResponsable('${nombreComedor}','${pswd}')`]} `));
     res.status(201).send({access:rows[0][`loginResponsable('${nombreComedor}','${pswd}')`]});
   } catch(err) {
+    console.log(err);
     res.status(500);
   }
 });

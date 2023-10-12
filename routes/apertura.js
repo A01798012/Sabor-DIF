@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router();
+const date = require("./date")
 
 const pool = require("./db")
 
@@ -56,6 +57,7 @@ router.post('/registrar', async (req, res) => {
     const connection = await pool.getConnection();
     await connection.query('CALL notificarApertura(?,?)', [nombreComedor, abierto]);
     connection.release();
+    console.log(...date(`Apertura notificada`))
     res.status(200).json({message: "OK"});
   } catch (error) {
     console.error(error);

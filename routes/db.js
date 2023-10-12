@@ -1,4 +1,5 @@
 const mariadb = require("mariadb");
+// db.js
 
 const pool = mariadb.createPool({
   host: 'localhost',

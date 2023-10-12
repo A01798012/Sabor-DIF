@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
+const date = require("./date")
 const pool = require("./db")
 
 /**
@@ -53,7 +54,7 @@ router.get('/nombres', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
-    console.log(rows[0]);
+    console.log(...date("Nombres de comedores obtenidos existosamente"))
     res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);

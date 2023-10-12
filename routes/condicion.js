@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
+const date = require("./date")
 const pool = require("./db")
 /**
  * @swagger
@@ -51,6 +52,7 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
+    console.log(...date("Condiciones obtenidas exitosamente"))
     res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
@@ -90,6 +92,7 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
+    console.log(...date("Condiciones obtenidas"))
     res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
@@ -102,6 +105,7 @@ router.post("/registrar", async (req, res) => {
     const connection = await pool.getConnection();
     await connection.query("CALL registrarCondiciones(?,?)", [idComensal, idCondicion]);
     connection.release();
+    console.log(...date("Condicion registrada"));
     res.status(200).json({message: "OK"});
   }catch(err) {
     console.error(err)

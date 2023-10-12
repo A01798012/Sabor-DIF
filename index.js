@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json())
 const cors = require("cors");
 app.use(cors());
-
+const date = require("./routes/date")
 //Configurando swagger y los formatos
 const options = {
   definition: {
@@ -51,6 +51,7 @@ const responsableRouter = require("./routes/responsable.js");
 const condicionRouter = require("./routes/condicion.js");
 const aperturaRouter = require("./routes/apertura.js");
 const adminRouter = require("./routes/administrador.js");
+const encuestaRouter = require("./routes/encuesta.js");
 
 app.use("/api/comedor", comedorRouter);
 app.use("/api/comensal", comensalRouter);
@@ -59,6 +60,7 @@ app.use("/api/responsable", responsableRouter);
 app.use("/api/condicion", condicionRouter);
 app.use("/api/apertura", aperturaRouter);
 app.use("/api/administrador", adminRouter);
+app.use("/api/encuesta", encuestaRouter);
 
 const port = 3000;
 app.listen(port, () => console.log(`Listening on port http://10.48.87.62:${port}...`))
