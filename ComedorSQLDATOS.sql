@@ -14,9 +14,17 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Volcando datos para la tabla comedor.administradores: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.administradores: ~5 rows (aproximadamente)
+DELETE FROM `administradores`;
+INSERT INTO `administradores` (`IdAdmin`, `Usuario`, `Contra`) VALUES
+	(1, 'cisco', '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
+	(2, 'Arturo', '0000000000000002ý¾júwwP«Æ–ž¡ßˆ‹tEî¨ºZ’Ã²Oö'),
+	(3, 'Ares', '0000000000000005Ý×ð5úë»S–üÂäý÷¸Üô-~¢,²K‘³Ÿ'),
+	(4, 'Sofia', '0000000000000009y^_ç±Œ‹7L 7#§3DM5òöe5?Mˆo¾RÙ'),
+	(5, 'Rosa', '00015D61B596B099uDÕÍ­T1ŸL«j¸Yù>¡ZýRVówX§');
 
 -- Volcando datos para la tabla comedor.comedor: ~40 rows (aproximadamente)
+DELETE FROM `comedor`;
 INSERT INTO `comedor` (`IdComedor`, `NombreComedor`, `Direccion`, `IdResponsable`, `Activo`) VALUES
 	(1, 'CLosOlivos', 'Avenida Jalisco s/n Casa de la Juventud', 17, NULL),
 	(2, 'CAdolfoLopezM', 'Privada Zacatecas no. 6', NULL, NULL),
@@ -59,37 +67,71 @@ INSERT INTO `comedor` (`IdComedor`, `NombreComedor`, `Direccion`, `IdResponsable
 	(39, 'CAmplEmiZap', 'Av. Ejército Mexicano s/n', NULL, NULL),
 	(40, 'CDIFCental', 'DIF Central. Av. Ruiz Cortines esq. Acambay', NULL, NULL);
 
--- Volcando datos para la tabla comedor.comensal: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.comensal: ~8 rows (aproximadamente)
+DELETE FROM `comensal`;
 INSERT INTO `comensal` (`IdComensal`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `CURP`, `Genero`) VALUES
 	(1, 'Miguel Angel', 'Figueroa', 'Andrade', 'FIAM691023HDFGNG07', 1),
 	(2, 'Rosa Itzel', 'Figueroa', 'Rosas', 'FIRR030820MMCGSSA4', 2),
 	(6, 'Dulce María', 'Rosas', 'Hernández', 'ROHD700629MDFSRL02', 2),
 	(13, 'Jaime', 'Beltran', 'Hidalgo', 'GEJA020503M5KL45F2', 1),
-	(14, 'Emma', 'Gutierrez', 'Cardenas', 'EGR1234567OKLMSNLP', 2);
+	(14, 'Emma', 'Gutierrez', 'Cardenas', 'EGR1234567OKLMSNLP', 2),
+	(15, 'Tilin', 'Til', 'Ti', 'FLNAFJKSBDKJF', 1),
+	(16, 'Tilin', 'Ti', 'ti', 'JHADJBDJ', 1),
+	(18, 'Tilin', 'Ti', 'ti', 'JHADJBmjrh4DJ', 1);
 
--- Volcando datos para la tabla comedor.comida: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.comida: ~15 rows (aproximadamente)
+DELETE FROM `comida`;
 INSERT INTO `comida` (`IdComida`, `IdComedor`, `IdComensal`, `aportacion`, `fecha`, `IdRelacion`, `paraLlevar`) VALUES
 	(2, 1, 2, 13, '2023-09-21', NULL, 0),
 	(3, 1, 1, 13, '2023-09-21', 6, 0),
-	(4, 1, 1, 13, '2023-09-21', NULL, 0);
+	(4, 1, 1, 13, '2023-09-21', NULL, 0),
+	(5, 2, 6, 13, '2023-10-09', NULL, 1),
+	(6, 2, 13, 13, '2023-10-09', NULL, 0),
+	(7, 2, 14, 13, '2023-10-09', NULL, 0),
+	(8, 1, 6, 13, '2023-10-09', NULL, 0),
+	(9, 1, 13, 13, '2023-10-09', NULL, 1),
+	(10, 1, 14, 13, '2023-10-09', NULL, 0),
+	(11, 1, 1, 0, '2023-10-10', NULL, 0),
+	(12, 1, 2, 0, '2023-10-10', NULL, 0),
+	(13, 1, 6, 0, '2023-10-10', NULL, 0),
+	(14, 2, 1, 0, '2023-10-10', NULL, 0),
+	(15, 2, 2, 0, '2023-10-10', NULL, 0),
+	(16, 2, 6, 0, '2023-10-10', NULL, 1);
 
--- Volcando datos para la tabla comedor.condicion: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.condicion: ~12 rows (aproximadamente)
+DELETE FROM `condicion`;
 INSERT INTO `condicion` (`IdCondicion`, `nombreCondicion`) VALUES
 	(1, 'Discapacidad visual'),
 	(2, 'Discapacidad auditiva'),
 	(3, 'Discapacidad motriz'),
 	(4, 'Discapacidad intelectual o cognitiva'),
 	(5, 'Embarazada'),
-	(6, 'Tercera edad');
+	(6, 'Tercera edad'),
+	(7, 'Migrantes'),
+	(8, 'Diabetes'),
+	(9, 'Hipertensión'),
+	(10, 'Cáncer'),
+	(11, 'Sobrepeso u obesidad'),
+	(12, 'Comunidades indígenas');
 
 -- Volcando datos para la tabla comedor.condicioncomensal: ~2 rows (aproximadamente)
+DELETE FROM `condicioncomensal`;
 INSERT INTO `condicioncomensal` (`IdCondicion`, `IdComensal`) VALUES
 	(2, 1),
 	(1, 13);
 
--- Volcando datos para la tabla comedor.encuesta: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.encuesta: ~6 rows (aproximadamente)
+DELETE FROM `encuesta`;
+INSERT INTO `encuesta` (`IdEncuesta`, `IdComedor`, `Higiene`, `Sabor`, `Atencion`, `Tiempo`, `Lugar`) VALUES
+	(1, 1, 9, 9, 7, 8, 8),
+	(2, 1, 10, 10, 8, 8, 8),
+	(3, 1, 5, 8, 3, 8, 8),
+	(4, 3, 9, 9, 7, 8, 8),
+	(5, 3, 10, 10, 8, 8, 8),
+	(6, 3, 5, 8, 3, 8, 8);
 
 -- Volcando datos para la tabla comedor.relacionpersonadependiente: ~5 rows (aproximadamente)
+DELETE FROM `relacionpersonadependiente`;
 INSERT INTO `relacionpersonadependiente` (`IdRelacion`, `IdCuidador`, `IdDependiente`) VALUES
 	(1, 1, 2),
 	(6, 1, 6),
@@ -97,12 +139,14 @@ INSERT INTO `relacionpersonadependiente` (`IdRelacion`, `IdCuidador`, `IdDependi
 	(8, 6, 2),
 	(9, 13, 1);
 
--- Volcando datos para la tabla comedor.responsable: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.responsable: ~2 rows (aproximadamente)
+DELETE FROM `responsable`;
 INSERT INTO `responsable` (`IdResponsable`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `Celular`, `IdComedor`, `Contra`) VALUES
 	(17, 'Marcos', 'Portillo', 'Morales', 554163289017, 1, '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
-	(19, 'Ana', 'Lopez', 'Chavez', 554269863520, 5, '0003306461220453UÎ\rLöwT¬	.WóýÈ×›t¡×†G{.“èâÃÐ');
+	(19, 'Ana', 'Lopez', 'Chavez', 554269863520, 7, '0003306461220453UÎ\rLöwT¬	.WóýÈ×›t¡×†G{.“èâÃÐ');
 
--- Volcando datos para la tabla comedor.responsableabrecomedor: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.responsableabrecomedor: ~3 rows (aproximadamente)
+DELETE FROM `responsableabrecomedor`;
 INSERT INTO `responsableabrecomedor` (`IdAbreComedor`, `IdComedor`, `Abierto`, `Fecha`) VALUES
 	(1, 1, 1, '2023-09-21'),
 	(2, 1, 1, '2023-09-26'),
