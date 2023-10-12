@@ -79,7 +79,7 @@ INSERT INTO `comensal` (`IdComensal`, `Nombres`, `ApellidoPaterno`, `ApellidoMat
 	(16, 'Tilin', 'Ti', 'ti', 'JHADJBDJ', 1),
 	(18, 'Tilin', 'Ti', 'ti', 'JHADJBmjrh4DJ', 1);
 
--- Volcando datos para la tabla comedor.comida: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.comida: ~16 rows (aproximadamente)
 DELETE FROM `comida`;
 INSERT INTO `comida` (`IdComida`, `IdComedor`, `IdComensal`, `aportacion`, `fecha`, `IdRelacion`, `paraLlevar`) VALUES
 	(2, 1, 2, 13, '2023-09-21', NULL, 0),
@@ -96,9 +96,10 @@ INSERT INTO `comida` (`IdComida`, `IdComedor`, `IdComensal`, `aportacion`, `fech
 	(13, 1, 6, 0, '2023-10-10', NULL, 0),
 	(14, 2, 1, 0, '2023-10-10', NULL, 0),
 	(15, 2, 2, 0, '2023-10-10', NULL, 0),
-	(16, 2, 6, 0, '2023-10-10', NULL, 1);
+	(16, 2, 6, 0, '2023-10-10', NULL, 1),
+	(23, 1, 6, 0, '2023-10-11', NULL, 1);
 
--- Volcando datos para la tabla comedor.condicion: ~12 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.condicion: ~11 rows (aproximadamente)
 DELETE FROM `condicion`;
 INSERT INTO `condicion` (`IdCondicion`, `nombreCondicion`) VALUES
 	(1, 'Discapacidad visual'),
@@ -114,13 +115,13 @@ INSERT INTO `condicion` (`IdCondicion`, `nombreCondicion`) VALUES
 	(11, 'Sobrepeso u obesidad'),
 	(12, 'Comunidades indígenas');
 
--- Volcando datos para la tabla comedor.condicioncomensal: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.condicioncomensal: ~1 rows (aproximadamente)
 DELETE FROM `condicioncomensal`;
 INSERT INTO `condicioncomensal` (`IdCondicion`, `IdComensal`) VALUES
 	(2, 1),
 	(1, 13);
 
--- Volcando datos para la tabla comedor.encuesta: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.encuesta: ~5 rows (aproximadamente)
 DELETE FROM `encuesta`;
 INSERT INTO `encuesta` (`IdEncuesta`, `IdComedor`, `Higiene`, `Sabor`, `Atencion`, `Tiempo`, `Lugar`) VALUES
 	(1, 1, 9, 9, 7, 8, 8),
@@ -139,13 +140,14 @@ INSERT INTO `relacionpersonadependiente` (`IdRelacion`, `IdCuidador`, `IdDependi
 	(8, 6, 2),
 	(9, 13, 1);
 
--- Volcando datos para la tabla comedor.responsable: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.responsable: ~3 rows (aproximadamente)
 DELETE FROM `responsable`;
 INSERT INTO `responsable` (`IdResponsable`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `Celular`, `IdComedor`, `Contra`) VALUES
-	(17, 'Marcos', 'Portillo', 'Morales', 554163289017, 1, '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
-	(19, 'Ana', 'Lopez', 'Chavez', 554269863520, 7, '0003306461220453UÎ\rLöwT¬	.WóýÈ×›t¡×†G{.“èâÃÐ');
+	(17, 'Marcos', 'Portillo', 'Morales', '554163289017', 1, '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
+	(19, 'Ana', 'Lopez', 'Chavez', '554269863520', 7, '0003306461220453UÎ\rLöwT¬	.WóýÈ×›t¡×†G{.“èâÃÐ'),
+	(20, 'Rosa', 'Figueroa', 'Rosas', '5577499543', 15, '0000000000000009y^_ç±Œ‹7L 7#§3DM5òöe5?Mˆo¾RÙ');
 
--- Volcando datos para la tabla comedor.responsableabrecomedor: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla comedor.responsableabrecomedor: ~1 rows (aproximadamente)
 DELETE FROM `responsableabrecomedor`;
 INSERT INTO `responsableabrecomedor` (`IdAbreComedor`, `IdComedor`, `Abierto`, `Fecha`) VALUES
 	(1, 1, 1, '2023-09-21'),
