@@ -8,7 +8,7 @@ router.post("/registrar", async function(req, res){
     const {IdComedor, atencion, higiene, sabor, lugar, tiempo} = req.body;
 console.log(req.body);
     const connection = await pool.getConnection();
-    await connection.query("CALL registrarEncuesta(?,?)", [IdComedor, atencion, higiene, sabor, lugar, tiempo]);
+    await connection.query("CALL registrarEncuesta(?,?,?,?,?,?)", [IdComedor, atencion, higiene, sabor, lugar, tiempo]);
     connection.release();
     console.log(...date("Encuesta registrada exitosamente"))
     res.status(201).send({message: "OK"});
