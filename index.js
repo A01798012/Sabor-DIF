@@ -52,6 +52,7 @@ const condicionRouter = require("./routes/condicion.js");
 const aperturaRouter = require("./routes/apertura.js");
 const adminRouter = require("./routes/administrador.js");
 const encuestaRouter = require("./routes/encuesta.js");
+const graficasRouter = require("./routes/graficas");
 
 app.use("/api/comedor", comedorRouter);
 app.use("/api/comensal", comensalRouter);
@@ -61,6 +62,8 @@ app.use("/api/condicion", condicionRouter);
 app.use("/api/apertura", aperturaRouter);
 app.use("/api/administrador", adminRouter);
 app.use("/api/encuesta", encuestaRouter);
+app.use("/api/graficas", graficasRouter);
+
 
 const port = 3000;
-app.listen(port, () => console.log(`Listening on port http://10.48.87.62:${port}...`))
+app.listen(port, () => console.log(`Listening on port http://:34.236.3.58:${port}...`))

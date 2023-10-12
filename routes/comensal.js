@@ -236,7 +236,7 @@ router.post("/registrar", async function(req, res){
     const rows = await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
-    console.log("Registro de comensal exitoso")
+    console.log(...date("Registro de comensal exitoso"));
     res.status(201).send(rows[0][0]);
   } catch(err) {
     console.log(err);
