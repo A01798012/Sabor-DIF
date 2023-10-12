@@ -38,6 +38,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarDonadasVendidas(?)", [idComedor]);
     connection.release();
+    console.log(rows);
     console.log(...date(`Donadas y Vendidas de ${idComedor}`));
     res.status(201).send(rows[0]);
   } catch (err) {
@@ -77,6 +78,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasDiarias(?,?)", [IdComedor, fecha]);
+    console.log(rows);
     connection.release();
     console.log(...date(`Comidas de ${idComedor} en ${fecha}`));
     res.status(201).send(rows[0]);
@@ -104,9 +106,16 @@ router.get("/condiciones", async function (req, res) {
   try {
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaCantidadCondicion()", []);
+    const serializedRows = rows[0].map(row => {
+      // Convert bigint columns to regular integers
+      return {
+        ...row,
+        TotalComensales: Number(row.TotalComensales),
+      };
+    });
     connection.release();
     console.log(...date(`Registro de condiciones enviado`));
-    res.status(201).send(rows[0]);
+    res.status(201).send(serializedRows);
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
@@ -148,6 +157,7 @@ router.get("/comidas/comidasDiarias/llevar", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasParaLlevarDiarias(?,?)", [idComedor, fecha]);
+    console.log(rows);
     connection.release();
     console.log(...date(`Comidas para llevar diarias en ${idComedor} - ${fecha}`));
     res.status(201).send(rows[0]);
@@ -157,6 +167,46 @@ router.get("/comidas/comidasDiarias/llevar", async function (req, res) {
   }
 });
 
-
-
+router.get("/comidas/mensuales", async function (req, res) {
+  try {
+    const {idComedor, fecha} = req.body
+    const connection = await pool.getConnection();
+    const rows = await connection.query("CALL graficaComidasMensuales(?,?)", [idComedor, fecha]);
+    console.log(rows);
+    connection.release();
+    console.log(...date(`Comidas para llevar mensuales en ${idComedor} - ${fecha}`));
+    res.status(201).send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: 'Error interno del servidor' });
+  }
+});
+router.get("/comidas/comidasMensuales/llevar", async function (req, res) {
+  try {
+    const {idComedor, fecha} = req.body
+    const connection = await pool.getConnection();
+    const rows = await connection.query("CALL graficaComidasParaLlevarMensuales(?,?)", [idComedor, fecha]);
+    console.log(rows);
+    connection.release();
+    console.log(...date(`Comidas para llevar mensuales en ${idComedor} - ${fecha}`));
+    res.status(201).send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: 'Error interno del servidor' });
+  }
+});
+router.get("/comidas/encuesta", async function (req, res) {
+  try {
+    const idComedor  = req.body
+    const connection = await pool.getConnection();
+    const rows = await connection.query("CALL graficaEncuesta(?)", [idComedor]);
+    console.log(rows);
+    connection.release();
+    console.log(...date(`Encuesta del comedor ${idComedor} enviadas`));
+    res.status(201).send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: 'Error interno del servidor' });
+  }
+});
 module.exports = router;
