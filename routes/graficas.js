@@ -46,7 +46,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
     });
     connection.release();
     console.log(...date(`Donadas y Vendidas de ${idComedor}`));
-    res.status(201).send(rows[0]);
+    res.status(201).send(serializedRows);
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
@@ -87,7 +87,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
     const serializedRows = rows[0].map(row => {
       return {
         ...row,
-        TotalComidadVendidas: Number(row.TotalComidasVendidas),
+        TotalComidasVendidas: Number(row.TotalComidasVendidas),
         TotalComidasDonadas: Number(row.TotalComidasDonadas),
       };
     });
