@@ -166,7 +166,33 @@ router.get("/comidas/comidasDiarias/llevar", async function (req, res) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
-
+/**
+ * @swagger
+ * /api/graficas/comidas/mensuales:
+ *   get:
+ *     summary: Obtener estadísticas de comidas mensuales
+ *     tags:
+ *       - Graficas
+ *     parameters:
+ *       - in: query
+ *         name: idComedor
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del comedor para el que se desean obtener estadísticas mensuales.
+ *       - in: query
+ *         name: fecha
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Fecha para la cual se desean obtener estadísticas mensuales.
+ *     responses:
+ *       201:
+ *         description: Éxito. Estadísticas mensuales obtenidas correctamente.
+ *       500:
+ *         description: Error interno del servidor.
+ */
 router.get("/comidas/mensuales", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
@@ -181,7 +207,36 @@ router.get("/comidas/mensuales", async function (req, res) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
-router.get("/comidas/comidasMensuales/llevar", async function (req, res) {
+
+/**
+ * @swagger
+ * /api/graficas/comidasMensuales/llevar:
+ *   get:
+ *     summary: Obtener estadísticas de comidas para llevar mensuales
+ *     tags:
+ *       - Graficas
+ *     parameters:
+ *       - in: query
+ *         name: idComedor
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del comedor para el que se desean obtener estadísticas de comidas para llevar mensuales.
+ *       - in: query
+ *         name: fecha
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Fecha para la cual se desean obtener estadísticas de comidas para llevar mensuales.
+ *     responses:
+ *       201:
+ *         description: Éxito. Estadísticas de comidas para llevar mensuales obtenidas correctamente.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+router.get("/comidasMensuales/llevar", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -195,9 +250,31 @@ router.get("/comidas/comidasMensuales/llevar", async function (req, res) {
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
-router.get("/comidas/encuesta", async function (req, res) {
+
+/**
+ * @swagger
+ * /api/graficas/encuesta:
+ *   get:
+ *     summary: Obtener estadísticas de encuestas de comedor
+ *     tags:
+ *       - Graficas
+ *     parameters:
+ *       - in: query
+ *         name: idComedor
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del comedor del que se desean obtener estadísticas de encuestas.
+ *     responses:
+ *       201:
+ *         description: Éxito. Estadísticas de encuestas obtenidas correctamente.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+router.get("/encuesta", async function (req, res) {
   try {
-    const idComedor  = req.body
+    const idComedor  = req.body.idComedor
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaEncuesta(?)", [idComedor]);
     console.log(rows);
