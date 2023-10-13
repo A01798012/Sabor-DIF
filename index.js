@@ -66,4 +66,4 @@ app.use("/api/graficas", graficasRouter);
 
 
 const port = 3000;
-app.listen(port, () => console.log(`Listening on port http://:34.236.3.58:${port}...`))
+app.listen(port, () => console.log(`Listening on port http://34.236.3.58:${port}...`))

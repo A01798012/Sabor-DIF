@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `comida` (
   CONSTRAINT `FK_comida_comedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_idComensal` FOREIGN KEY (`IdComensal`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_relacionpersonadependiente` FOREIGN KEY (`IdRelacion`) REFERENCES `relacionpersonadependiente` (`IdRelacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -163,6 +163,129 @@ CREATE TABLE IF NOT EXISTS `responsableabrecomedor` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para procedimiento comedor.graficaCantidadCondicion
+DELIMITER //
+CREATE PROCEDURE `graficaCantidadCondicion`()
+BEGIN
+
+SELECT
+    nombreCondicion,
+    COUNT(condicioncomensal.IdComensal) AS TotalComensales
+FROM
+    condicion 
+LEFT JOIN
+    condicioncomensal  ON condicion.IdCondicion = condicioncomensal.IdCondicion
+GROUP BY
+	nombreCondicion
+ORDER BY
+   nombreCondicion;
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.graficaComidasDiarias
+DELIMITER //
+CREATE PROCEDURE `graficaComidasDiarias`(
+	IN `IdComedorV` INT,
+	IN `fechaV` DATE
+)
+BEGIN
+
+SELECT
+    COUNT(IF(aportacion = 13, 1, NULL)) AS TotalComidasVendidas,
+    COUNT(IF(aportacion = 0, 1, NULL)) AS TotalComidasDonadas
+FROM
+    comida
+WHERE 
+	 IdComedor = IdComedorV AND fecha LIKE fechaV;
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.graficaComidasMensuales
+DELIMITER //
+CREATE PROCEDURE `graficaComidasMensuales`(
+	IN `IdComedorV` INT,
+	IN `fechaV` INT
+)
+BEGIN
+SELECT
+    IdComedor, DATE_FORMAT(fecha, '%Y-%m') AS Mes,
+    COUNT(IF(aportacion = 13, 1, NULL)) AS TotalComidasVendidas,
+    COUNT(IF(aportacion = 0, 1, NULL)) AS TotalComidasDonadas
+
+FROM
+    comida
+    
+WHERE 
+	 IdComedor = IdComedorV AND DATE_FORMAT(fecha, '%Y-%m') LIKE DATE_FORMAT(fechaV, '%Y-%m');
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.graficaComidasParaLlevarDiarias
+DELIMITER //
+CREATE PROCEDURE `graficaComidasParaLlevarDiarias`(
+	IN `IdComedorV` INT,
+	IN `fechaV` DATE
+)
+BEGIN
+
+SELECT
+    IdComedor, DATE_FORMAT(fecha, '%Y-%m-%d') AS Dia,
+    SUM(CASE WHEN paraLlevar = 1 THEN 1 ELSE 0 END) AS ComidasParaLlevar,
+    SUM(CASE WHEN paraLlevar = 0 THEN 1 ELSE 0 END) AS ComidasEnComedor
+FROM
+    comida
+WHERE 
+	IdComedor = IdComedorV AND fecha LIKE fechaV;
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.graficaComidasParaLlevarMensuales
+DELIMITER //
+CREATE PROCEDURE `graficaComidasParaLlevarMensuales`(
+	IN `IdComedorV` INT,
+	IN `fechaV` DATE
+)
+BEGIN
+SELECT
+    IdComedor, DATE_FORMAT(fecha, '%Y-%m') AS Mes,
+    SUM(CASE WHEN paraLlevar = 1 THEN 1 ELSE 0 END) AS ComidasParaLlevar,
+    SUM(CASE WHEN paraLlevar = 0 THEN 1 ELSE 0 END) AS ComidasEnComedor
+FROM
+    comida
+    
+WHERE 
+	 IdComedor = IdComedorV AND DATE_FORMAT(fecha, '%Y-%m') LIKE DATE_FORMAT(fechaV, '%Y-%m');
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento comedor.graficaEncuesta
+DELIMITER //
+CREATE PROCEDURE `graficaEncuesta`(
+	IN `IdComedorV` INT
+)
+BEGIN
+
+SELECT 
+	   COUNT(IdEncuesta) AS NumeroEncuestas, 
+		SUM(Higiene) AS Higiene, 
+		SUM(Tiempo) AS Tiempo, 
+		SUM(Sabor) AS Sabor, 
+		SUM(Atencion) AS Atencion, 
+		SUM(Lugar) AS Lugar
+FROM 
+	   encuesta
+WHERE 
+	   IdComedor = IdComedorV;
+
+
+END//
+DELIMITER ;
 
 -- Volcando estructura para procedimiento comedor.mostrarComedores
 DELIMITER //

@@ -17,11 +17,11 @@
 -- Volcando datos para la tabla comedor.administradores: ~5 rows (aproximadamente)
 DELETE FROM `administradores`;
 INSERT INTO `administradores` (`IdAdmin`, `Usuario`, `Contra`) VALUES
-	(1, 'cisco', '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
-	(2, 'Arturo', '0000000000000002ý¾júwwP«Æ–ž¡ßˆ‹tEî¨ºZ’Ã²Oö'),
-	(3, 'Ares', '0000000000000005Ý×ð5úë»S–üÂäý÷¸Üô-~¢,²K‘³Ÿ'),
-	(4, 'Sofia', '0000000000000009y^_ç±Œ‹7L 7#§3DM5òöe5?Mˆo¾RÙ'),
-	(5, 'Rosa', '00015D61B596B099uDÕÍ­T1ŸL«j¸Yù>¡ZýRVówX§');
+	(1, 'cisco', 'cisco123'),
+	(2, 'Arturo', 'cisco123'),
+	(3, 'Ares', 'cisco123'),
+	(4, 'Sofia', 'cisco123'),
+	(5, 'Rosa', 'cisco123');
 
 -- Volcando datos para la tabla comedor.comedor: ~40 rows (aproximadamente)
 DELETE FROM `comedor`;
@@ -143,9 +143,9 @@ INSERT INTO `relacionpersonadependiente` (`IdRelacion`, `IdCuidador`, `IdDependi
 -- Volcando datos para la tabla comedor.responsable: ~3 rows (aproximadamente)
 DELETE FROM `responsable`;
 INSERT INTO `responsable` (`IdResponsable`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `Celular`, `IdComedor`, `Contra`) VALUES
-	(17, 'Marcos', 'Portillo', 'Morales', '554163289017', 1, '0000000000000006˜ðÊ­ÇÅ±NoB«â\\r~5Ù\0ÈPû±»á,@˜±•'),
-	(19, 'Ana', 'Lopez', 'Chavez', '554269863520', 7, '0003306461220453UÎ\rLöwT¬	.WóýÈ×›t¡×†G{.“èâÃÐ'),
-	(20, 'Rosa', 'Figueroa', 'Rosas', '5577499543', 15, '0000000000000009y^_ç±Œ‹7L 7#§3DM5òöe5?Mˆo¾RÙ');
+	(17, 'Marcos', 'Portillo', 'Morales', '554163289017', 1, 'cisco123'),
+	(19, 'Ana', 'Lopez', 'Chavez', '554269863520', 7, 'cisco123'),
+	(20, 'Rosa', 'Figueroa', 'Rosas', '5577499543', 15, 'cisco123');
 
 -- Volcando datos para la tabla comedor.responsableabrecomedor: ~1 rows (aproximadamente)
 DELETE FROM `responsableabrecomedor`;
