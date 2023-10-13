@@ -45,7 +45,6 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
       }
     });
     connection.release();
-    console.log(rows);
     console.log(...date(`Donadas y Vendidas de ${idComedor}`));
     res.status(201).send(rows[0]);
   } catch (err) {
@@ -85,10 +84,16 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasDiarias(?,?)", [idComedor, fecha]);
-    console.log(rows);
+    const serializedRows = rows[0].map(row => {
+      return {
+        ...row,
+        TotalComidadVendidas: Number(row.TotalComidasVendidas),
+        TotalComidasDonadas: Number(row.TotalComidasDonadas),
+      };
+    });
     connection.release();
     console.log(...date(`Comidas de ${idComedor} en ${fecha}`));
-    res.status(201).send(rows[0]);
+    res.status(201).send(serializedRows);
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
@@ -159,12 +164,11 @@ router.get("/condiciones", async function (req, res) {
  *         description: Error interno del servidor.
  */
 
-router.get("/comidas/comidasDiarias/llevar", async function (req, res) {
+router.get("/comidasDiarias/llevar", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasParaLlevarDiarias(?,?)", [idComedor, fecha]);
-    console.log(rows);
     connection.release();
     console.log(...date(`Comidas para llevar diarias en ${idComedor} - ${fecha}`));
     res.status(201).send(rows[0]);
@@ -205,7 +209,6 @@ router.get("/comidas/mensuales", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasMensuales(?,?)", [idComedor, fecha]);
-    console.log(rows);
     connection.release();
     console.log(...date(`Comidas para llevar mensuales en ${idComedor} - ${fecha}`));
     res.status(201).send(rows[0]);
@@ -248,7 +251,6 @@ router.get("/comidasMensuales/llevar", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasParaLlevarMensuales(?,?)", [idComedor, fecha]);
-    console.log(rows);
     connection.release();
     console.log(...date(`Comidas para llevar mensuales en ${idComedor} - ${fecha}`));
     res.status(201).send(rows[0]);
@@ -290,7 +292,7 @@ router.get("/encuesta", async function (req, res) {
         NumeroEncuestas: Number(row.NumeroEncuestas),
       }
     })
-    console.log(serializedRows);
+//    console.log(serializedRows);
     connection.release();
     console.log(...date(`Encuesta del comedor ${idComedor} enviadas`));
     res.status(201).send(serializedRows);
