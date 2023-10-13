@@ -54,8 +54,8 @@ console.log(req.body);
     const connection = await pool.getConnection();
     const rows = await connection.query("SELECT loginResponsable(?,?)", [idComedor, pswd]);
     connection.release();
-    console.log(...date(`Inicio de sesion de responsable ${rows[0][`loginResponsable('${nombreComedor}','${pswd}')`]} `));
-    res.status(201).send({access:rows[0][`loginResponsable('${nombreComedor}','${pswd}')`]});
+    console.log(...date(`Inicio de sesion de responsable ${rows[0][`loginResponsable('${idComedor}','${pswd}')`]} `));
+    res.status(201).send({access:rows[0][`loginResponsable('${idComedor}','${pswd}')`]});
   } catch(err) {
     console.log(err);
     res.status(500);
