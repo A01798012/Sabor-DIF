@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `comida` (
   CONSTRAINT `FK_comida_comedor` FOREIGN KEY (`IdComedor`) REFERENCES `comedor` (`IdComedor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_idComensal` FOREIGN KEY (`IdComensal`) REFERENCES `comensal` (`IdComensal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_comida_relacionpersonadependiente` FOREIGN KEY (`IdRelacion`) REFERENCES `relacionpersonadependiente` (`IdRelacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -291,7 +291,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE `mostrarComedores`()
 BEGIN
-SELECT NombreComedor FROM comedor;
+SELECT IdComedor, NombreComedor FROM comedor;
 END//
 DELIMITER ;
 
@@ -347,12 +347,12 @@ DELIMITER ;
 -- Volcando estructura para procedimiento comedor.notificarApertura
 DELIMITER //
 CREATE PROCEDURE `notificarApertura`(
-	IN `comedorV` VARCHAR(50),
+	IN `comedorV` INT,
 	IN `abierto` INT
 )
 BEGIN
 
-INSERT INTO responsableabrecomedor (IdComedor, abierto, fecha) VALUES ((SELECT IdComedor FROM comedor WHERE NombreComedor = comedorV), abierto, CURDATE());
+INSERT INTO responsableabrecomedor (IdComedor, abierto, fecha) VALUES (comedorV, abierto, CURDATE());
 
 END//
 DELIMITER ;
@@ -394,7 +394,7 @@ DELIMITER ;
 -- Volcando estructura para procedimiento comedor.registrarComidaDependiente
 DELIMITER //
 CREATE PROCEDURE `registrarComidaDependiente`(
-	IN `comedorV` VARCHAR(50),
+	IN `comedorV` INT,
 	IN `IdDependienteV` INT,
 	IN `IdCuidadorV` INT,
 	IN `aportacionV` INT,
@@ -402,7 +402,7 @@ CREATE PROCEDURE `registrarComidaDependiente`(
 )
 BEGIN
 
-INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES ((SELECT IdComedor FROM comedor WHERE NombreComedor = comedorV), 
+INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (comedorV, 
 IdDependienteV, aportacionV, CURDATE(), (SELECT IdRelacion FROM relacionpersonadependiente WHERE IdCuidador = IdCuidadorV AND IdDependiente = IdDependienteV), paraLlevarV);
 
 END//
@@ -486,7 +486,7 @@ DELIMITER ;
 
 -- Volcando estructura para función comedor.loginResponsable
 DELIMITER //
-CREATE FUNCTION `loginResponsable`(`v_NombreComedor` VARCHAR(50),
+CREATE FUNCTION `loginResponsable`(`v_Comedor` INT,
 	`p_Password` VARCHAR(50)
 ) RETURNS int(11)
 BEGIN
@@ -495,7 +495,7 @@ BEGIN
     DECLARE v_HashedPassword VARCHAR(300);
     DECLARE p_Success INT;
     
-    SELECT contra INTO v_StoredPassword FROM responsable WHERE IdComedor = (SELECT IdComedor FROM comedor WHERE nombreComedor = v_NombreComedor);
+    SELECT contra INTO v_StoredPassword FROM responsable WHERE IdComedor = v_Comedor;
     SELECT SUBSTRING(v_StoredPassword, 1, 16) INTO v_Salt;
    
     SET v_HashedPassword = CONCAT(v_Salt, UNHEX(SHA2(CONCAT(v_Salt, p_Password), 256)));
