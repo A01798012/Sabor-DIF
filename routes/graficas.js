@@ -15,7 +15,7 @@ const { route } = require("./comedor");
 /**
  * @swagger
  * /api/graficas/vendidasDonadas/{idComedor}:
- *   get:
+ *   post:
  *     summary: Para obtener las comidas vendidas y donadas de un comedor en específico
  *     tags:
  *       - Graficas
@@ -32,7 +32,7 @@ const { route } = require("./comedor");
  *       500:
  *         description: Error interno del servidor.
  */
-router.get("/vendidasDonadas/:idComedor", async function (req, res) {
+router.post("/vendidasDonadas/:idComedor", async function (req, res) {
   try {
     const idComedor = req.params.idComedor;
     const connection = await pool.getConnection();
@@ -55,7 +55,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
 /**
  * @swagger
  * /api/graficas/comidasDiarias:
- *   get:
+ *   post:
  *     summary: Para obtener las comidas diarias
  *     tags:
  *       - Graficas
@@ -79,7 +79,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
  *         description: Éxito. Se han obtenido las comidas diarias correctamente.
  *       500:
  *         description: Error interno del servidor.
- */router.get("/comidasDiarias", async function (req, res) {
+ */router.post("/comidasDiarias", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -104,7 +104,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
 /**
  * @swagger
  * /api/graficas/condiciones:
- *   get:
+ *   post:
  *     summary: Para obtener cuántas personas tienen cierto número de condiciones
  *     tags:
  *       - Graficas
@@ -114,7 +114,7 @@ router.get("/vendidasDonadas/:idComedor", async function (req, res) {
  *       500:
  *         description: Error interno del servidor.
  */
-router.get("/condiciones", async function (req, res) {
+router.post("/condiciones", async function (req, res) {
   try {
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaCantidadCondicion()", []);
@@ -164,7 +164,7 @@ router.get("/condiciones", async function (req, res) {
  *         description: Error interno del servidor.
  */
 
-router.get("/comidasDiarias/llevar", async function (req, res) {
+router.post("/comidasDiarias/llevar", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -180,7 +180,7 @@ router.get("/comidasDiarias/llevar", async function (req, res) {
 /**
  * @swagger
  * /api/graficas/comidas/mensuales:
- *   get:
+ *   post:
  *     summary: Obtener estadísticas de comidas mensuales
  *     tags:
  *       - Graficas
@@ -204,7 +204,7 @@ router.get("/comidasDiarias/llevar", async function (req, res) {
  *       500:
  *         description: Error interno del servidor.
  */
-router.get("/comidas/mensuales", async function (req, res) {
+router.post("/comidas/mensuales", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -221,7 +221,7 @@ router.get("/comidas/mensuales", async function (req, res) {
 /**
  * @swagger
  * /api/graficas/comidasMensuales/llevar:
- *   get:
+ *   post:
  *     summary: Obtener estadísticas de comidas para llevar mensuales
  *     tags:
  *       - Graficas
@@ -246,7 +246,7 @@ router.get("/comidas/mensuales", async function (req, res) {
  *         description: Error interno del servidor.
  */
 
-router.get("/comidasMensuales/llevar", async function (req, res) {
+router.post("/comidasMensuales/llevar", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -263,7 +263,7 @@ router.get("/comidasMensuales/llevar", async function (req, res) {
 /**
  * @swagger
  * /api/graficas/encuesta:
- *   get:
+ *   post:
  *     summary: Obtener estadísticas de encuestas de comedor
  *     tags:
  *       - Graficas
@@ -281,7 +281,7 @@ router.get("/comidasMensuales/llevar", async function (req, res) {
  *         description: Error interno del servidor.
  */
 
-router.get("/encuesta", async function (req, res) {
+router.post("/encuesta", async function (req, res) {
   try {
     const idComedor  = req.body.idComedor
     const connection = await pool.getConnection();
