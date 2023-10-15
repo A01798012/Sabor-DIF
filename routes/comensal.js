@@ -1,14 +1,8 @@
 const express = require("express")
 const router = express.Router();
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
-
+const date = require("./date")
+const pool = require("./db")
 /**
  * @swagger
  * components:
@@ -88,8 +82,10 @@ router.get("/dependientes/:idResponsable", async function(req, res){
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarDependientes(?)", [idResponsable]);
     connection.release();
-    res.status(200).send({ message: "Dependientes obtenidos exitosamente", rows: rows[0] });
+    console.log(...date("Dependientes obtenidos"))
+    res.status(200).send(rows[0]);
   } catch(err) {
+    console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
@@ -130,8 +126,10 @@ router.get("/todos", async function(req, res){
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL mostrarComensales()", []);
     connection.release();
-    res.status(200).send({ message: "Comensales obtenidos exitosamente", rows: rows[0] });
+    console.log(...date("Datos de comensales enviados"))
+    res.status(200).send(rows[0]);
   } catch(err) {
+    console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
@@ -184,9 +182,11 @@ router.post("/registrar/dependiente", async function(req, res){
     const idDependiente = req.body.idDependiente;
     const connection = await pool.getConnection();
     await connection.query("CALL registrarDependencia(?,?)", [idDependiente, idDepende]);
+    console.log(...date("Registro de dependencia"))
     connection.release();
     res.status(201).send({ message: "Dependiente registrado exitosamente" });
   } catch(err) {
+    console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });
@@ -236,8 +236,10 @@ router.post("/registrar", async function(req, res){
     const rows = await connection.query("CALL registrarComensal(?, ?, ?, ?, ?)",
     [nombreComensal, apellidoPaterno, apellidoMaterno, curp, genero]);
     connection.release();
-    res.status(201).send({ message: "OK", idComensal: rows[0][0] });
+    console.log(...date("Registro de comensal exitoso"));
+    res.status(201).send(rows[0][0]);
   } catch(err) {
+    console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
   }
 });

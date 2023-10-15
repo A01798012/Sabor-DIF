@@ -1,13 +1,8 @@
 const express = require("express")
 const router = express.Router();
+const date = require("./date")
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
+const pool = require("./db")
 
 /**
  * @swagger
@@ -58,10 +53,11 @@ const pool = mariadb.createPool({
 router.post('/registrar', async (req, res) => {
   try {
     // Call the stored procedure to obtain names from the database
-    const {nombreComedor, abierto} = req.body
+    const {idComedor, abierto} = req.body
     const connection = await pool.getConnection();
-    await connection.query('CALL notificarApertura(?,?)', [nombreComedor, abierto]);
+    await connection.query('CALL notificarApertura(?,?)', [idComedor, abierto]);
     connection.release();
+    console.log(...date(`Apertura notificada`))
     res.status(200).json({message: "OK"});
   } catch (error) {
     console.error(error);

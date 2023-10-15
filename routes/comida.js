@@ -1,14 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
-
+const date = require("./date")
+const pool = require("./db")
 /**
  * @swagger
  * components:
@@ -82,12 +76,13 @@ router.post("/registrar", async function(req, res){
     const {idComensal, idComedor, aportacion, paraLlevar } = req.body;
     const connection = await pool.getConnection();
     console.log(req.body);
-
+    console.log(...date("Comida registrada"))
     await connection.query("CALL registrarComida(?,?,?,?)", [idComensal, idComedor, aportacion, paraLlevar]);
     connection.release();
     res.status(201)
       .send({message: "OK"});
   }catch(err) {
+    console.log(err)
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
@@ -127,6 +122,7 @@ router.post("/registrar/dependiente", async function(req, res){
     const connection = await pool.getConnection();
     await connection.query("CALL registrarComidaDependiente(?,?,?,?,?)", [idComedor,idDependiente, idDepende, aportacion, paraLlevar]);
     connection.release();
+    console.log(...date("Comida dependiente registrada"))
     res.status(201).send({message: "OK"});
   }catch(err) {
     console.log(err);

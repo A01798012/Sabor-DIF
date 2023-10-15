@@ -1,14 +1,8 @@
 const express = require("express")
 const router = express.Router();
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
-
+const date = require("./date")
+const pool = require("./db")
 /**
  * @swagger
  * components:
@@ -58,7 +52,8 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
-    res.status(200).json({message: "OK", rows: rows[0]});
+    console.log(...date("Condiciones obtenidas exitosamente"))
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -97,7 +92,8 @@ router.get('/todas', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarCondicion()', []);
     connection.release();
-    res.status(200).json({message: "OK", rows: rows[0]});
+    console.log(...date("Condiciones obtenidas"))
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -109,6 +105,7 @@ router.post("/registrar", async (req, res) => {
     const connection = await pool.getConnection();
     await connection.query("CALL registrarCondiciones(?,?)", [idComensal, idCondicion]);
     connection.release();
+    console.log(...date("Condicion registrada"));
     res.status(200).json({message: "OK"});
   }catch(err) {
     console.error(err)

@@ -1,13 +1,8 @@
 const express = require("express")
 const router = express.Router();
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
+const date = require("./date")
+const pool = require("./db")
 
 /**
  * @swagger
@@ -59,9 +54,8 @@ router.get('/nombres', async (req, res) => {
     const connection = await pool.getConnection();
     const rows = await connection.query('CALL mostrarComedores()');
     connection.release();
-    console.log(rows[0]);
-    const nombres = rows.map((row) => row.nombre);
-    res.status(200).json({message: "OK", rows: rows[0]});
+    console.log(...date("Nombres de comedores obtenidos existosamente"))
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

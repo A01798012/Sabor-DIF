@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const date = require("./date")
 
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'pepe',
-  database: 'comedor',
-});
+const pool = require("./db")
 /**
  * @swagger
  * tags:
@@ -54,14 +49,15 @@ const pool = mariadb.createPool({
  */
 router.post("/login", async function(req, res){
   try {
-    const {nombreComedor, pswd} = req.body;
+    const {idComedor, pswd} = req.body;
 console.log(req.body);
     const connection = await pool.getConnection();
-    const rows = await connection.query("SELECT loginResponsable(?,?)", [nombreComedor, pswd]);
+    const rows = await connection.query("SELECT loginResponsable(?,?)", [idComedor, pswd]);
     connection.release();
-    console.log(rows[0]);
-    res.status(201).send({message: "OK", access: rows[0]});
+    console.log(...date(`Inicio de sesion de responsable ${rows[0][`loginResponsable(${idComedor},'${pswd}')`]} `));
+    res.status(201).send({access:rows[0][`loginResponsable(${idComedor},'${pswd}')`]});
   } catch(err) {
+    console.log(err);
     res.status(500);
   }
 });
