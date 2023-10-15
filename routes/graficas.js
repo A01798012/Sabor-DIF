@@ -210,9 +210,16 @@ router.post("/comidas/mensuales", async function (req, res) {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasMensuales(?,?)", [idComedor, fecha]);
+    const serializedRows = rows[0].map(row => {
+      return {
+        ...row,
+        TotalComidasVendidas: Number(TotalComidasVendidas),
+        TotalComidasDonadas: TotalComidasDonadas
+      };
+    });
     connection.release();
     console.log(...date(`Comidas para mensuales en ${idComedor} - ${fecha}`));
-    res.status(201).send(rows[0]);
+    res.status(201).send(serializedRows);
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
