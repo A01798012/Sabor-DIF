@@ -213,8 +213,8 @@ router.post("/comidas/mensuales", async function (req, res) {
     const serializedRows = rows[0].map(row => {
       return {
         ...row,
-        TotalComidasVendidas: Number(TotalComidasVendidas),
-        TotalComidasDonadas: TotalComidasDonadas
+        TotalComidasVendidas: Number(row.TotalComidasVendidas),
+        TotalComidasDonadas: Number(row.TotalComidasDonadas)
       };
     });
     connection.release();
