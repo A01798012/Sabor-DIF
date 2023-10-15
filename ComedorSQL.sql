@@ -207,7 +207,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE `graficaComidasMensuales`(
 	IN `IdComedorV` INT,
-	IN `fechaV` INT
+	IN `fechaV` DATE
 )
 BEGIN
 SELECT
