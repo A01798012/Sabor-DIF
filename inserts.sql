@@ -1,3 +1,4 @@
+use database comedor;
 INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (11, 14, 13, '2020-02-15', NULL, 0);
 INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (26, 24, 13, '2021-04-23', NULL, 1);
 INSERT INTO comida (IdComedor, IdComensal, aportacion, fecha, IdRelacion, paraLlevar) VALUES (4, 19, 13, '2022-09-11', NULL, 1);
