@@ -79,7 +79,8 @@ router.post("/vendidasDonadas/:idComedor", async function (req, res) {
  *         description: Éxito. Se han obtenido las comidas diarias correctamente.
  *       500:
  *         description: Error interno del servidor.
- */router.post("/comidasDiarias", async function (req, res) {
+ */
+router.post("/comidasDiarias", async function (req, res) {
   try {
     const {idComedor, fecha} = req.body
     const connection = await pool.getConnection();
@@ -210,7 +211,7 @@ router.post("/comidas/mensuales", async function (req, res) {
     const connection = await pool.getConnection();
     const rows = await connection.query("CALL graficaComidasMensuales(?,?)", [idComedor, fecha]);
     connection.release();
-    console.log(...date(`Comidas para llevar mensuales en ${idComedor} - ${fecha}`));
+    console.log(...date(`Comidas para mensuales en ${idComedor} - ${fecha}`));
     res.status(201).send(rows[0]);
   } catch (err) {
     console.log(err);
