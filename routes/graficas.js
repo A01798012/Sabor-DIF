@@ -46,7 +46,7 @@ router.post("/vendidasDonadas/:idComedor", async function (req, res) {
     });
     connection.release();
     console.log(...date(`Donadas y Vendidas de ${idComedor}`));
-    res.status(201).send(serializedRows);
+    res.status(201).send(serializedRows[0]);
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: 'Error interno del servidor' });
