@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sabor DIF Comedores</title>
+  <script src="https://kit.fontawesome.com/6988ff5484.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/principal.css" />
+  <link rel="stylesheet" href="css/comedores.css" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale = 1.0, maximun-scale=1.0, minimun-scale = 1.0">
+  <style>
+    table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+  </style>
+</head>
+
+<body>
+    <!--Header - menu-->
+    <header>
+        <!-- Header, contiene logo y menu de opcio16nes -->
+        <div class="header-content">
+            <!-- Logo/Letras -->
+            <div class="logo">
+                <img src ="imagenes/logoApp.png" alt = "">
+
+                <h1 id="Sabor">&ensp;Sabor</h1>
+                <h1 id="DIF">&ensp;DIF</h1>
+            </div>
+            <!-- Menu de opciones -->
+            <div class="menu" id="show-menu">
+                <!-- Etiquetas dentro del menu -->
+                <nav>
+                    <ul>
+                        <li><a href="inicio.html"><i class="fa-solid fa-house"></i>Inicio</a></li>
+                        <li class="menu-select"><a href="comedores.html" class = "text-menu-select"><i class="fa-solid fa-book"></i>Comedores</a></li>
+                        <li><a href="administradores.html"><i class="fa-solid fa-filter"></i>Estadísticas</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div id="icon-menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <!--Portada-->
+    <div class="container-all" id="move-content">
+        <div class="inicio-container-cover">
+            <div class="container-info-cover">
+                    <h1>
+                        Comedores Comunitaros
+                    </h1>
+            </div>
+            <p>
+                Encuentra el comedor más cerca de ti...
+            </p> 
+        </div>
+
+        <!--Lista comedores-->
+        <div style="overflow-x:auto;" class="container-content">
+            <table class="tabla">
+                <tr class="tabla-inicio">
+                    <td class="tabla-nombre tabla-inicio-texto">Comedor</td>
+                    <td class="tabla-direccion tabla-inicio-texto">Dirección</td>
+                    <td class="tabla-disponibilidad tabla-inicio-texto">Disponibilidad</td>
+
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">5 de Mayo</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/vT4monm2uHXtLy749">Calle Porfirio Díaz 27 Col. 5 de Mayo</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">México 86</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/xToHwaR2vemgGbhC8">Calle Italia # 53</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lomas de Monte María</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/YxztUAxaub6uUndx7">Calle Monte Real Mz 406 LT 11</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Cerro Grande</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/ny4nb5c8oZbRKxut8">Calle Teotihuacan #15</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Amp Peñitas</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/wE3CS7bB7KAMfRDh9">Cda. Gardenias #3</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">San José el jaral 2</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/y3cPWbM6WqMJpqBn6">Calle Jazmín #22</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Col. San José el Jaral</td>
+                    <td class="tabla-direccion"><a href="">Calle Clavelinas #24</a></td>
+                    <td class="tabla-disponibilidad Cerrado">Inactivo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Ampl Emiliano Zapata</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/WdGoVXtpHJe59jAu9">Av. Ejército Mexicano s/n</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lomas de Atizapán</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/DxTV2cDjSG2M5ctGA">DIF Central. Av. Ruiz Cortines esq. Acambay</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre"> Casa Juventud</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/A8ZoJZHQUDWa35ADA">Avenida Jalisco s/n Casa de la Juventud</a></td>
+                    <td class="tabla-disponibilidad Cerrado">Inactivo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Adolfo López Mateos</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/xQm1pxR3MnxBj7377">Privada Zacatecas no. 6</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Hogares de Atizapán</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/abGvuBhi4KtCxYg48">Hogares. Retorno de la Tranquilidad No. 8A</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Rinconada Bonfil</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/33hViE46LtGmNKxY7">Calle Rosas MZ 4 Lt 15/a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">San Juan Bosco</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/UsCrbLnRKx6KfAhR7">Calle Profesor Roberto Barrio No. 2 </a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">México Nuevo</td>
+                    <td class="tabla-direccion"><a href="">Pioneros de Rochdale esquina con calle Veracruz S/N</a></td>
+                    <td class="tabla-disponibilidad Cerrado">Inactivo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Peñitas</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/7TxyY6poBsSAA3Sm7">Mirador 1 #100 Colonia las peñitas</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Rancho Castro</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/wkTTzzn35rWdi7sQA">Calle del Puente s/n Rancho salón de usos múltiplos.</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Amp Villa de las Palmas</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/pczs8DymQ55MVnNv8">Villas de las palmas Calle avena Mz. 5 Lt. 12</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Col. UAM</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/3hwv61FBoGQmjvCS9">UAM Calle Ingenieria Industrial Mz 24 Lt 45</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Bosques de Ixtacala</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/6wyDcJVM5AfimAWW7">Cerrada Sauces Mz 12 Lt 13- C #6 </a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lomas de Tepalcapa</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/H3M45ZWoDNANWPuT8">Calle seis # 14</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Villa de las Torres</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/VZ2TmxbNKfiYiYKj6">Calle Villa Alba Mza. 17 lote 9, esquina Bicentenario</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Prof. Cristobal Higuera</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/91HRvecb7E5o5bVm8">Calle Sandía # 24</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lomas de Guadalupe</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/Xmg8uKG14xEt1A8Q9">Calle Vicente Guerrero Número 2</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lázaro Cardenas</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/weRiL2jRSMrg1bPa7">Calle Chihuahua 151</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">El Chaparral</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/sA7jP7eqG8qiN5K48">Calle Túcan # 48</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Primero de Septiembre</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/VtiSjseVkHuaAHu26">Calle Belisario Dominguez # 44</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Las Aguilas</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/Pffnxxkf1GD7uvcU9">Pavo Real # 18</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">El Cerrito</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/4HUhXmqrhQvtnR28A">Paseo Buenavista # 1</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Villas de la Hacienda</td>
+                    <td class="tabla-direccion"><a href="">Calle de la Chaparreras # 5</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Seguridad Pública</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/pH1GbARigzRkennZ6">Remodelación</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">San Juan Ixtacala P/N</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/6WcqyV4t2YJvsk5E9">Loma San Juan 194</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre"> Prados Ixtcala 2da secc</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/FEpvpWK2uRQvXMrx9">Clavel no.13 Mz 13 Lt 7 </a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Villa Jardin</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/5N7i6MkMRyutbkEj7">Cda . Francisco Villa S/N</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Amp Cristobal Higuera </td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/yiM3KxEUgygygev8A">Calle Aldama #17</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Adolfo López Mateos</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/P375Z1tUiNueAMEA9">Calle Leon #1 esquina Coatzacoalcos</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Lomas de San Miguel</td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/hEW8vsedAKetsrzK8">Jacarandas #5</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">San Juan Ixtacala Plano Norte </td>
+                    <td class="tabla-direccion"><a href="https://maps.app.goo.gl/vuwX6E6J7WjC2gSGA">Boulevar Ignacio Zaragoza , Loma Alta #82</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Los Olivos 2</td>
+                    <td class="tabla-direccion"><a href="">Calle Mérida numero 10</a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+                <tr class="tabla-linea">
+                    <td class="tabla-nombre">Tierra de en medio</td>
+                    <td class="tabla-direccion"><a href="">Hacienda de la Flor #14 </a></td>
+                    <td class="tabla-disponibilidad Abierto">Activo</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="container-footer">
+            <footer>
+                <div class="logo-footer">
+                    <img src = "" alt ="">
+                </div>
+
+                <div class="redes-footer">
+                    <a href="https://instagram.com/difatizapanz?igshid=MzRlODBiNWFlZA=="><i class="fa-brands fa-instagram icon-redes-footer"></i></a>
+                    <a href="https://www.facebook.com/AtizapanDIF?mibextid=LQQJ4d"><i class="fa-brands fa-facebook-f icon-redes-footer"></i></a>
+                    <a href="https://www.tiktok.com/@difatizapanz?_t=8gXdfeXAHgL&_r=1"><i class="fa-brands fa-tiktok icon-redes-footer"></i></a>
+                    <!-- <a href="https://tr.ee/LreI1X8uR2"><i class="fa-brands fa-linkedin-in icon-redes-footer"></i></a> -->
+                </div>
+
+                <hr>
+                <!-- <h4>Creado por: Rosa Figueroa </h4> -->
+
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
