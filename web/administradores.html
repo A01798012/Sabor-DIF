@@ -3,66 +3,68 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Inicio sesion Admin</title>
+  <title>Inicio sesión Admin</title>
+  <!-- Importación de la biblioteca de iconos Font Awesome -->
   <script src="https://kit.fontawesome.com/6988ff5484.js" crossorigin="anonymous"></script>
+  <!-- Enlace a hojas de estilo CSS externas -->
   <link rel="stylesheet" href="css/principal.css" />
   <link rel="stylesheet" href="css/administradores.css" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale = 1.0, maximun-scale=1.0, minimun-scale = 1.0">
+  <!-- Configuración de la vista del dispositivo -->
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
 
 <body>
-    <header>
-        <!-- Header, contiene logo y menu de opcio16nes -->
-        <div class="header-content">
-            <!-- Logo/Letras -->
-            <div class="logo">
-                <img src ="imagenes/logoApp.png" alt = "">
-
-                <h1 id="Sabor">&ensp;Sabor</h1>
-                <h1 id="DIF">&ensp;DIF</h1>
-            </div>
-            <!-- Menu de opciones -->
-            <div class="menu" id="show-menu">
-                <!-- Etiquetas dentro del menu -->
-                <nav>
-                    <ul>
-                        <li><a href="inicio.html"><i class="fa-solid fa-house"></i>Inicio</a></li>
-                        <li><a href="comedores.html" ><i class="fa-solid fa-book"></i>Comedores</a></li>
-                        <li class="menu-select"><a href="administradores.html" class = "text-menu-select"><i class="fa-solid fa-filter"></i>Estadísticas</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-
-        <div id="icon-menu">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-    </header>
-    
-    <div class="container-all" id="move-content">
-        <div class="inicio-container-cover">
-            <div class="container-info-cover">
-                <form id="loginForm">
-                    <h1>
-                        Inicio de Sesión
-                    </h1>
-                    <div class="input-box">
-                        <input type = "text" placeholder="Usuario" required id="Usuario" name="Usuario" required autofocus>
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type = "password" placeholder="Contraseña" required id="Contra" name="Contra" required>
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <button type="button" onclick="loginUser();"class="btnLogin" id = "ingresar">Ingresar</button>
-                </form>
-                </div>
-            </div>
-        </div>
+  <!-- Encabezado del sitio -->
+  <header>
+    <div class="header-content">
+      <!-- Logo y título del sitio -->
+      <div class="logo">
+        <img src="imagenes/logoApp.png" alt="">
+        <h1 id="Sabor">&ensp;Sabor</h1>
+        <h1 id="DIF">&ensp;DIF</h1>
+      </div>
+      <!-- Menú de opciones -->
+      <div class="menu" id="show-menu">
+        <nav>
+          <ul>
+            <li><a href="inicio.html"><i class="fa-solid fa-house"></i>Inicio</a></li>
+            <li><a href="comedores.html"><i class="fa-solid fa-book"></i>Comedores</a></li>
+            <li class="menu-select"><a href="administradores.html" class="text-menu-select"><i class="fa-solid fa-filter"></i>Estadísticas</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    
-    <script src="js/script.js"></script>
-    <script src="js/ingresar.js"></script>
+    <div id="icon-menu">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <div class="container-all" id="move-content">
+    <div class="inicio-container-cover">
+      <div class="container-info-cover">
+        <!-- Formulario de inicio de sesión -->
+        <form id="loginForm">
+          <h1>
+            Inicio de Sesión
+          </h1>
+          <div class="input-box">
+            <input type="text" placeholder="Usuario" required id="Usuario" name="Usuario" required autofocus>
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" placeholder="Contraseña" required id="Contra" name="Contra" required>
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <button type="button" onclick="loginUser();" class="btnLogin" id="ingresar">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts JavaScript -->
+  <script src="js/script.js"></script>
+  <script src="js/ingresar.js"></script>
 
 </body>
 

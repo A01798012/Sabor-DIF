@@ -1,5 +1,4 @@
-
-//funcion con guia de color
+//Esta función crea un gráfico de rosquilla (doughnut chart) que muestra la cantidad de comidas vendidas y donadas en un comedor. 
 function graficaComidaVendidasDonadas() {
     
     // Obtener el elemento canvas
@@ -61,8 +60,7 @@ function graficaComidaVendidasDonadas() {
         });
         
         console.log(data);
-        
-        // Continuar con la lógica para crear el nuevo gráfico
+
         const comidasVendidas = Number(data[0]);
         const comidasDonadas = Number(data[1]);
 
@@ -101,10 +99,6 @@ function graficaComidaVendidasDonadas() {
                 }
             }
         });
-
-        
-        
-        
         window.myChart1 = newChart;
     };
     
@@ -114,7 +108,7 @@ function graficaComidaVendidasDonadas() {
     xhr.send(payload);
     console.log("Se mandó");
 }
-
+//Esta función crea un gráfico de rosquilla (doughnut chart) que muestra la cantidad de comidas vendidas y donadas en un comedor al mes. 
 function graficaComidasMensuales() {
     console.log("Todo pinta bien...");
     
@@ -195,7 +189,7 @@ function graficaComidasMensuales() {
     xhr.send(payload);
     console.log("Se mandó");
 }
-
+//Esta función crea un gráfico de pastel (pie chart) que muestra la cantidad de comidas para llevar y comidas en el comedor. También utiliza una solicitud AJAX para obtener datos y representa los resultados.
 function graficaComidasParaLlevar() {
     console.log("Todo pinta bien...");
     
@@ -353,7 +347,7 @@ function graficaComidasParaLlevarMensuales() {
     xhr.send(payload);
     console.log("Se mandó");
 }
-
+//Esta función crea un gráfico de barras que muestra las calificaciones promedio de una encuesta relacionada con la higiene, el tiempo, el sabor, la atención y el lugar en un comedor.
 function graficaEncuesta() {
     console.log("Todo pinta bien...");
     
@@ -455,7 +449,7 @@ function graficaEncuesta() {
     console.log("Mandamos este payload: " + payload);
     xhr.send(payload);
 }
-
+//Esta función crea un gráfico polar (polar area chart) que muestra información sobre las condiciones o grupos vulnerables dentro de los comensales. 
 function graficaCondiciones() {
     const xhr = new XMLHttpRequest();
     xhr.onload = () => {
@@ -493,7 +487,7 @@ function graficaCondiciones() {
     xhr.open('POST','http://34.236.3.58:3000/api/graficas/condiciones' );
     xhr.send(null);
 };
-
+// Esta función llama a todas las funciones anteriores para generar todos los gráficos a la vez.
 function todas(){
     graficaComidaVendidasDonadas();
     graficaComidasMensuales();

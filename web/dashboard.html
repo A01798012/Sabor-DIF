@@ -1,200 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <title>Dashboard</title>
+  <!-- Importación de la biblioteca de iconos Font Awesome -->
   <script src="https://kit.fontawesome.com/6988ff5484.js" crossorigin="anonymous"></script>
-  <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Importación de iconos de Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Enlace a una hoja de estilo CSS externa -->
   <link rel="stylesheet" href="/css/style.css">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale = 1.0, maximun-scale=1.0, minimun-scale = 1.0">
+  <!-- Configuración de la vista del dispositivo -->
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
 </head>
-
 <body>
-    <div class="container">
-        <aside>
-            <br>
-            <div class="close" id = "close-btn">
-                <span class="material-icons">
-                    close
-                    </span>
-            </div>
-            <div class="top">
-                <div class="logo">
-                    <img src ="imagenes/logoApp.png" alt = "">
-                    <h1 id="Sabor">&ensp;Sabor</h1>
-                    <h1 id="DIF">&ensp;DIF</h1>
-                </div>
-            </div>
-
-            <div class="sidebar">
-
-                <a href="dashboard.html" class="active">
-                    <span class="material-icons">
-                        dashboard
-                        </span>
-                    <h3>Dashboard</h3>
-                </a>
-
-                <a href="comensal.html">
-                    <span class="material-icons">
-                        bar_chart
-                        </span>
-                    <h3>Comensal</h3>
-                </a>
-
-
-                <span class="material-icons" id = "logout">
-                    logout
-                    </span>
-                <h3 id ="text-logout">Logout</h3>
-
-            </div>
-        </aside>
-        <main>
-            <h1>
-                Dashboard
-            </h1>
-            <div class="date">
-                <input type ="date" id = "fecha">
-            </div>
-            <div class = "componentes">
-                <form>
-                    <p> Comedor: 
-                        <select id="comedor" name="comedor">
-                            <option value="32">C2LosOlivos</option>
-                            <option value="2">CAdolfoLopezM</option>
-                            <option value="29">CAdolfoLopezMateos</option>
-                            <option value="28">CAmpCristobalHiguera</option>
-                            <option value="39">CAmplEmiZap</option>
-                            <option value="36">CAmpPenitas</option>
-                            <option value="9">CAmpVillasPalmas</option>
-                            <option value="12">CBosqueIxtacala</option>
-                            <option value="21">CCerrito</option>
-                            <option value="35">CCerroGrande</option>
-                            <option value="18">CChaparral</option>
-                            <option value="11">CCincoMayo</option>
-                            <option value="10">CColUAM</option>
-                            <option value="40">CDIFCental</option>
-                            <option value="3">CHogaresAtizapan</option>
-                            <option value="20">CLasAguidas</option>
-                            <option value="17">CLazaroCardenas</option>
-                            <option value="16">CLomasGuadalupe</option>
-                            <option value="33">CLomasMonteM</option>
-                            <option value="30">CLomasSanMiguel</option>
-                            <option value="13">CLomasTepalcapa</option>
-                            <option value="1">CLosOlivos</option>
-                            <option value="22">CMexico86</option>
-                            <option value="6">CMexicoNuevo</option>
-                            <option value="7">CPeñitas</option>
-                            <option value="26">CPradosIxtacala</option>
-                            <option value="19">CPrimeroSeptiembre</option>
-                            <option value="15">CProfCristobalHiguera</option>
-                            <option value="8">CRanchoCastro</option>
-                            <option value="4">CRinconadaBonfil</option>
-                            <option value="5">CSanJuanBosco</option>
-                            <option value="25">CSanJuanIxtacala</option>
-                            <option value="31">CSanJuanIxtacalaPlanoNorte</option>
-                            <option value="24">CSeguiridadPublica</option>
-                            <option value="38">CSJoseJaral</option>
-                            <option value="37">CSJoseJaral2</option>
-                            <option value="34">CTierraEnMedio</option>
-                            <option value="27">CVillaJardin</option>
-                            <option value="23">CVillasHacienda</option>
-                            <option value="14">CVillasTorres</option>
-                        </select>
-                    </p>
-                    <button type="button" onclick="todas();"class="btnLogin" id = "ingresar">Obtener</button>       
-                </form>        
+  <div class="container">
+    <aside>
+      <br>
+      <!-- Botón para cerrar el menú lateral -->
+      <div class="close" id="close-btn">
+        <span class="material-icons">
+          close
+        </span>
+      </div>
+      <div class="top">
+        <div class="logo">
+          <!-- Logo y nombre del sitio -->
+          <img src="imagenes/logoApp.png" alt="">
+          <h1 id="Sabor">&ensp;Sabor</h1>
+          <h1 id="DIF">&ensp;DIF</h1>
         </div>
-            <div class="insights">
-                <div class="sales">
-                    <span class="material-icons">
-                        monetization_on
-                        </span>
-                        <br>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total recaudado por día</h3>
-                            <h1 id="aportacionDIA"></h1>
-                        </div>
-                    </div>
-                </div>
-                <!----------------END Recaudado diario-------------->
-                <div class="month">
-                    <span class="material-icons">
-                        calendar_month
-                        </span>
-                        <br>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total recaudado mensual</h3>
-                            <h1 id="aportacionMES"></h1>
-                        </div>
-                    </div>
-                </div>
-                 <!----------------END RECAUDADado mensual-------------->
-                 <div class="food">
-                    <span class="material-icons">
-                        restaurant
-                        </span>
-                        <br>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Comidas de hoy: <h1 id="comidashoy"></h1></h3>
-
-                            <h2 id = "meta"> </h2> 
-                        </div>
-                    </div>
-                </div>
-                <!----------------END comidas diarias, faltantes-------------->
+      </div>
+      <div class="sidebar">
+        <!-- Enlaces del menú lateral -->
+        <a href="dashboard.html" class="active">
+          <span class="material-icons">
+            dashboard
+          </span>
+          <h3>Dashboard</h3>
+        </a>
+        <a href="comensal.html">
+          <span class="material-icons">
+            bar_chart
+          </span>
+          <h3>Comensal</h3>
+        </a>
+        <span class="material-icons" id="logout">
+          logout
+        </span>
+        <h3 id="text-logout">Logout</h3>
+      </div>
+    </aside>
+    <main>
+      <!-- Título principal de la página -->
+      <h1>
+        Dashboard
+      </h1>
+      <div class="date">
+        <!-- Selector de fecha -->
+        <input type="date" id="fecha">
+      </div>
+      <div class="componentes">
+        <form>
+          <p>Comedor:
+            <select id="comedor" name="comedor">
+              <!-- Opciones del menú desplegable -->
+              <!-- Cada opción tiene un valor (value) y un nombre (nombre del comedor) -->
+              <option value="32">C2LosOlivos</option>
+                    <option value="2">CAdolfoLopezM</option>
+                    <option value="29">CAdolfoLopezMateos</option>
+                    <option value="28">CAmpCristobalHiguera</option>
+                    <option value="39">CAmplEmiZap</option>
+                    <option value="36">CAmpPenitas</option>
+                    <option value="9">CAmpVillasPalmas</option>
+                    <option value="12">CBosqueIxtacala</option>
+                    <option value="21">CCerrito</option>
+                    <option value="35">CCerroGrande</option>
+                    <option value="18">CChaparral</option>
+                    <option value="11">CCincoMayo</option>
+                    <option value="10">CColUAM</option>
+                    <option value="40">CDIFCental</option>
+                    <option value="3">CHogaresAtizapan</option>
+                    <option value="20">CLasAguidas</option>
+                    <option value="17">CLazaroCardenas</option>
+                    <option value="16">CLomasGuadalupe</option>
+                    <option value="33">CLomasMonteM</option>
+                    <option value="30">CLomasSanMiguel</option>
+                    <option value="13">CLomasTepalcapa</option>
+                    <option value="1">CLosOlivos</option>
+                    <option value="22">CMexico86</option>
+                    <option value="6">CMexicoNuevo</option>
+                    <option value="7">CPeñitas</option>
+                    <option value="26">CPradosIxtacala</option>
+                    <option value="19">CPrimeroSeptiembre</option>
+                    <option value="15">CProfCristobalHiguera</option>
+                    <option value="8">CRanchoCastro</option>
+                    <option value="4">CRinconadaBonfil</option>
+                    <option value="5">CSanJuanBosco</option>
+                    <option value="25">CSanJuanIxtacala</option>
+                    <option value="31">CSanJuanIxtacalaPlanoNorte</option>
+                    <option value="24">CSeguiridadPublica</option>
+                    <option value="38">CSJoseJaral</option>
+                    <option value="37">CSJoseJaral2</option>
+                    <option value="34">CTierraEnMedio</option>
+                    <option value="27">CVillaJardin</option>
+                    <option value="23">CVillasHacienda</option>
+                    <option value="14">CVillasTorres</option>
+            </select>
+          </p>
+          <!-- Botón para obtener información -->
+          <button type="button" onclick="todas();" class="btnLogin" id="ingresar">Obtener</button>
+        </form>
+      </div>
+      <div class="insights">
+        <!-- Paneles de resumen -->
+        <div class="sales">
+          <span class="material-icons">
+            monetization_on
+          </span>
+          <br>
+          <div class="middle">
+            <div class="left">
+              <!-- Información sobre las ventas diarias -->
+              <h3>Total recaudado por día</h3>
+              <h1 id="aportacionDIA"></h1>
             </div>
-            <!-----------END DE INSIGHTS-->
-            <div class="graficas">
-                <div class ="column">
-                    <h1>Comidas donadas y vendidas por día</h1>
-                    <br>
-                    <canvas id="graficaComidasDonadasVendidas"></canvas>
-                </div>
-                <div class ="column">
-                    <h1>Comidas donadas y vendidas al mes</h1>
-                    <br>
-                    <canvas id="graficaComidasMensuales"></canvas>
-                </div>
-                <div class ="column">
-                    <h1>Comidas para llevar y en comedor (diarias)</h1>
-                    <br>
-                    <canvas id="graficaComidasParaLlevar"></canvas>
-                </div>
-                <div class ="column">
-                    <h1>Comidas para llevar y en comedor (mensuales)</h1>
-                    <br>
-                    <canvas id="graficaComidasParaLlevarMensuales"></canvas>
-                </div>
-                <div class ="column">
-                    <h1>Encuestas comedor</h1>
-                    <br>
-                    <canvas id="graficaEncuesta"></canvas>
-                </div>
-                
-            </div>
-            
-        </main>
-        <!-----------END DE INSIGHTS-->
-        <div class="right">
-            <div class="top">
-                <button id="menu-btn">
-                    <span class="material-icons">
-                        menu
-                        </span>
-                </button>
-            </div>
+          </div>
         </div>
+        <div class="month">
+          <span class="material-icons">
+            calendar_month
+          </span>
+          <br>
+          <div class="middle">
+            <div class="left">
+              <!-- Información sobre las ventas mensuales -->
+              <h3>Total recaudado mensual</h3>
+              <h1 id="aportacionMES"></h1>
+            </div>
+          </div>
+        </div>
+        <div class="food">
+          <span class="material-icons">
+            restaurant
+          </span>
+          <br>
+          <div class="middle">
+            <div class="left">
+              <!-- Información sobre las comidas diarias -->
+              <h3>Comidas de hoy: <h1 id="comidashoy"></h1></h3>
+              <h2 id="meta"> </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="graficas">
+        <!-- Contenedores para gráficos -->
+        <!-- Puedes personalizar estos gráficos según tus necesidades -->
+        <div class="column">
+          <h1>Comidas donadas y vendidas por día</h1>
+          <br>
+          <canvas id="graficaComidasDonadasVendidas"></canvas>
+        </div>
+        <div class="column">
+          <h1>Comidas donadas y vendidas al mes</h1>
+          <br>
+          <canvas id="graficaComidasMensuales"></canvas>
+        </div>
+        <div class="column">
+          <h1>Comidas para llevar y en comedor (diarias)</h1>
+          <br>
+          <canvas id="graficaComidasParaLlevar"></canvas>
+        </div>
+        <div class="column">
+          <h1>Comidas para llevar y en comedor (mensuales)</h1>
+          <br>
+          <canvas id="graficaComidasParaLlevarMensuales"></canvas>
+        </div>
+        <div class="column">
+          <h1>Encuestas comedor</h1>
+          <br>
+          <canvas id="graficaEncuesta"></canvas>
+        </div>
+      </div>
+    </main>
+    <div class="right">
+      <div class="top">
+        <button id="menu-btn">
+          <span class="material-icons">
+            menu
+          </span>
+        </button>
+      </div>
     </div>
-
-    <script src="js/grafica.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/menu.js"></script>
-    <script src="/js/logout.js"></script>
+  </div>
+  <!-- Importación de scripts JavaScript -->
+  <script src="js/grafica.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/logout.js"></script>
 </body>
